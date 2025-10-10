@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+    {% load static %}
+    <head>
+        <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>QuizVerse</title>
+  </head>
+  <body>
+    <header>
+      <h1>QuizVerse</h1>
+      <h2>Online Quiz Creator & Taker Platform</h2>
+      <nav>
+        <ul>
+            <li><a href="{% url 'base' %}"> main </a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      {% block content %}
+        
+      {% endblock %}
+    </main>
+
+    <footer>
+        {% block footer %}
+            <div class="footer-content">
+                <div class="about-us">
+                    <h3>About Us</h3>
+                    <p>QuizVerse is an online platform that allows users to create and take quizzes on various topics. Our mission is to make learning fun and engaging for everyone.</p>
+                </div>
+                <div class="social-media">
+                    <h3>Follow Us</h3>
+                    <h4>Facebook : <a href="https://www.facebook.com/QuizVerse" target="_blank"><i class="fa-brands fa-facebook"></i></a></h4> 
+                    <h4>X plateform : <a href="https://www.twitter.com/QuizVerse" target="_blank"><i class="fa-brands fa-x-twitter"></i></a></h4>
+                    <h4>Instagram : <a href="https://www.instagram.com/QuizVerse" target="_blank"><i class="fa-brands fa-instagram"></i></a></h4>
+                </div>
+                <div class="contact-info">
+                    <h3>Contact Us</h3>
+                    <p>Email: <a href="nouranabojwayed@gmail.com" target="_blank">Nouran Abo-Jowaid</a></p>
+                    <p>Phone: +962-781-477-541</p>
+                    <p>Address: enabta St, Irbid City, Jordan</p>
+                </div>
+                <div class="quick-links">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="{% url 'base' %}">main</a></li>
+                        {% comment %} <li><a href="{% url 'create_quiz' %}">Create Quiz</a></li>
+                        <li><a href="{% url 'take_quiz' %}">Take Quiz</a></li>
+                        <li><a href="{% url 'view_results' %}">View Results</a></li> {% endcomment %}
+                    </ul>
+            </div>
+        {% endblock %}
+        <p>&copy; 2024 QuizVerse. All rights reserved.</p>
+    </footer>
+
+  </body>
+</html>
