@@ -1,7 +1,7 @@
-{% comment %} simple form i will update it later {% endcomment %}
 <h2>Login</h2>
 <form method="POST">
     {% csrf_token %}
     {{ form.as_p }}
     <button type="submit">Login</button>
 </form>
+<p>Don't have an account? <a href="{% url 'signup' %}">Sign Up</a></p>

@@ -29,7 +29,7 @@
         {% if user.profile.user_type == 'student' %}
             <a href="{% url 'quiz_list' %}" class="btn">Get Started</a>
         {% elif user.profile.user_type == 'teacher' %}
-            <a href="{% url 'examp_page' %}" class="btn">Get Started</a>
+            <a href="{% url 'quiz_list' %}" class="btn">Get Started</a>
         {% endif %}
         {% else %}
             <a href="{% url 'signup' %}" class="btn">Get Started</a>
@@ -45,8 +45,23 @@
 
 <nav id="main-navbar" class="transparent-nav">
     <ul>
+        {% if user.is_authenticated %}
+            <li>
+                <a href="{% url 'profile' user.username %}">
+                    {{ user.username }}
+                </a>
+            </li>
+        {% endif %}
+
         <li><a href="{% url 'base' %}">main</a></li>
         <li><a href="{% url 'quiz_list' %}">Quizzes</a></li>
+        {% if user.is_authenticated %}
+        <form method="post" action="{% url 'logout' %}">
+            {% csrf_token %}
+            <button type="submit">Logout</button>
+        </form>
+        {% endif %}
+
     </ul>
 </nav>
 
