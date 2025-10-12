@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block body_class %}no-hero{% endblock %}
+
+{% block content %}
+<h2>Quizzes</h2>
+
+<ul>
+    {% for quiz in quizzes %}
+        <li>
+            <a href="{% url 'question_list' quiz.id %}">{{ quiz.title }}</a>
+            - {{ quiz.description }}
+        </li>
+    {% empty %}
+        <li>No quizzes yet.</li>
+    {% endfor %}
+</ul>
+
+<h3>Create a new Quiz</h3>
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn">Add Quiz</button>
+</form>
+{% endblock %}

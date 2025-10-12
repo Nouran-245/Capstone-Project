@@ -11,21 +11,12 @@
     <link rel="icon" type="image/png" href="{% static 'image/logoicon.png' %}" />
     <title>{% block title %}QuizVerse{% endblock %}</title>
 </head>
-<body>
+<body class="{% block body_class %}{% endblock %}">
 
-<header class="hero-header"> 
-    <video autoplay muted loop id="hero-bg-video">
-        <source src="{% static 'image/BGvideo.mp4' %}" type="video/mp4" />
-    </video>
-    <div class="video-overlay"></div> 
-    
-    <nav id="main-navbar" class="transparent-nav"> 
-        <ul>
-            <li><a href="{% url 'base' %}">main</a></li>
-        </ul>
-    </nav>
+<header class="hero-header">
+    {% block header1 %}{% endblock %}
 
-    {% block header %}
+    {% block header2 %}
     <section class="hero-section">
         <div class="hero-content">
             <h1>Hello!</h1>
@@ -40,66 +31,14 @@
     {% endblock %}
 </header>
 
+<nav id="main-navbar" class="transparent-nav">
+    <ul>
+        <li><a href="{% url 'base' %}">Main</a></li>
+    </ul>
+</nav>
+
 <main>
-{% block content %}
-    <section class="about-section">
-        <div class="about-content">
-        <h2>About QuizVerse</h2>
-        <p>
-            Welcome to <strong>QuizVerse</strong> — your go-to platform for interactive learning and entertainment.
-            At QuizVerse, we believe that learning should never feel boring. Our platform lets you create, share, and take quizzes on a wide range of topics — from general knowledge and science to pop culture and technology.
-        </p>
-
-        <p>
-            Whether you’re a student testing your knowledge, a teacher creating educational quizzes, or just someone who loves challenges, <strong>QuizVerse</strong> provides a fun, engaging, and easy-to-use experience.
-        </p>
-
-        <p>
-            Our mission is simple:<br>
-            <em>To make learning enjoyable, accessible, and rewarding for everyone.</em>
-        </p>
-
-        <p>
-            Join our growing community and start exploring your knowledge universe — only on <strong>QuizVerse</strong>.
-        </p>
-        </div>
-    </section>
-
-    <section class="features-section">
-        <div class="features-content">
-            <h2>Features</h2>
-            <ul>
-                <li>Create custom quizzes with multiple question types.</li>
-                <li>Take quizzes and get instant feedback.</li>
-                <li>Track your quiz history and performance.</li>
-                <li>Share quizzes with friends and challenge them.</li>
-            </ul>
-        </div>
-    </section>
-
-    <section class="cta-section">
-        <div class="cta-content">
-            <h2>Get Started Today!</h2>
-            <p>Sign up now to start creating and taking quizzes on QuizVerse.</p>
-        </div>
-    </section>
-
-<section class="contact-section">
-    <div class="contact-content">
-        <h2>Contact Us</h2>
-        <form action="#" method="post">
-            <div class="form-group">
-                <input type="text" name="name" placeholder="Your Name" required />
-                <input type="email" name="email" placeholder="Your Email" required />
-            </div>
-            <div class="form-group">
-                <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
-            </div>
-            <button type="submit" class="btn">Send Message</button>
-        </form>
-    </div>
-</section>
-{% endblock %}
+    {% block content %}{% endblock %}
 </main>
 
 <footer>

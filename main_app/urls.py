@@ -9,4 +9,6 @@ urlpatterns = [
     
     path('', views.base , name='base'),
     # path('home/', views.home , name='home'),
+    path('quizzes/', views.quiz_list, name='quiz_list'),
+    path('quizzes/<int:quiz_id>/questions/', views.question_list, name='question_list'),
 ]
