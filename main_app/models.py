@@ -1,8 +1,20 @@
 from django.db import models
-from django.urls import reverse
 from django.contrib.auth.models import User
 
+# Profile for extra info like user type
+class Profile(models.Model):
+    USER_TYPES = (
+        ('student', 'Student'),
+        ('teacher', 'Teacher'),
+    )
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user_type = models.CharField(max_length=10, choices=USER_TYPES)
 
+    def __str__(self):
+        return f"{self.user.username} ({self.user_type})"
+
+
+# Quiz Models
 class Quiz(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='quizzes')
     title = models.CharField(max_length=255)
@@ -38,6 +50,3 @@ class Result(models.Model):
 
     def __str__(self):
         return f"{self.user.username} - {self.quiz.title} ({self.score})"
-
-
-# Create your models here.

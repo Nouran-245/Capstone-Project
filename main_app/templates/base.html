@@ -14,15 +14,27 @@
 <body class="{% block body_class %}{% endblock %}">
 
 <header class="hero-header">
-    {% block header1 %}{% endblock %}
+    {% block hero %}
+    <video autoplay muted loop id="hero-bg-video">
+        <source src="{% static 'image/BGvideo.mp4' %}" type="video/mp4" />
+    </video>
+    <div class="video-overlay"></div> 
 
-    {% block header2 %}
     <section class="hero-section">
         <div class="hero-content">
             <h1>Hello!</h1>
             <h2>Welcome to QuizVerse</h2>
             <p>Your ultimate destination for creating and taking quizzes online!</p>
-            <a href="{% url 'base' %}" class="btn">Get Started</a>
+        {% if user.is_authenticated %}
+        {% if user.profile.user_type == 'student' %}
+            <a href="{% url 'quiz_list' %}" class="btn">Get Started</a>
+        {% elif user.profile.user_type == 'teacher' %}
+            <a href="{% url 'examp_page' %}" class="btn">Get Started</a>
+        {% endif %}
+        {% else %}
+            <a href="{% url 'signup' %}" class="btn">Get Started</a>
+        {% endif %}
+
         </div>
         <div class="hero_image">
             <img src="{% static 'image/logo.png' %}" alt="logo" />
@@ -33,16 +45,54 @@
 
 <nav id="main-navbar" class="transparent-nav">
     <ul>
-        <li><a href="{% url 'base' %}">Main</a></li>
+        <li><a href="{% url 'base' %}">main</a></li>
+        <li><a href="{% url 'quiz_list' %}">Quizzes</a></li>
     </ul>
 </nav>
 
 <main>
-    {% block content %}{% endblock %}
+    {% block content %}
+    <!-- About, Features, Contact sections only appear in base page -->
+    <section class="about-section">
+        <div class="about-content">
+            <h2>About QuizVerse</h2>
+            <p>Welcome to <strong>QuizVerse</strong> — your go-to platform for interactive learning and entertainment.</p>
+            <p>Whether you’re a student testing your knowledge, a teacher creating quizzes, or just someone who loves challenges, <strong>QuizVerse</strong> provides a fun, engaging, and easy-to-use experience.</p>
+            <p>Our mission is simple:<br><em>To make learning enjoyable, accessible, and rewarding for everyone.</em></p>
+        </div>
+    </section>
+
+    <section class="features-section">
+        <div class="features-content">
+            <h2>Features</h2>
+            <ul>
+                <li>Create custom quizzes with multiple question types.</li>
+                <li>Take quizzes and get instant feedback.</li>
+                <li>Track your quiz history and performance.</li>
+                <li>Share quizzes with friends and challenge them.</li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="contact-section">
+        <div class="contact-content">
+            <h2>Contact Us</h2>
+            <form action="#" method="post">
+                <div class="form-group">
+                    <input type="text" name="name" placeholder="Your Name" required />
+                    <input type="email" name="email" placeholder="Your Email" required />
+                </div>
+                <div class="form-group">
+                    <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
+                </div>
+                <button type="submit" class="btn">Send Message</button>
+            </form>
+        </div>
+    </section>
+    {% endblock %}
 </main>
 
 <footer>
-    {% block footer %}
     <div class="footer-content">
         <div class="about-us">
             <h3>About Us</h3>
@@ -55,7 +105,6 @@
             <a href="https://www.instagram.com/QuizVerse" target="_blank"><i class="fa-brands fa-instagram"></i></a>
         </div>
     </div>
-    {% endblock %}
     <div class="footer-bottom">
         <p>&copy; 2025 QuizVerse. All rights reserved.</p>
     </div>

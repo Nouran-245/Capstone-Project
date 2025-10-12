@@ -1,6 +1,9 @@
 {% extends 'base.html' %}
 
-{% block body_class %}no-hero{% endblock %}
+{% block title %}Quizzes - QuizVerse{% endblock %}
+
+{% block hero %}
+{% endblock %}
 
 {% block content %}
 <h2>Quizzes</h2>
@@ -8,8 +11,7 @@
 <ul>
     {% for quiz in quizzes %}
         <li>
-            <a href="{% url 'question_list' quiz.id %}">{{ quiz.title }}</a>
-            - {{ quiz.description }}
+            <a href="{% url 'question_list' quiz.id %}">{{ quiz.title }}</a> - {{ quiz.description }}
         </li>
     {% empty %}
         <li>No quizzes yet.</li>

@@ -1,9 +1,11 @@
 {% extends 'base.html' %}
 
-{% block body_class %}no-hero{% endblock %}
+{% block title %}Questions - QuizVerse{% endblock %}
+
+{% block hero %}
+{% endblock %}
 
 {% block content %}
-
 <h2>Questions for "{{ quiz.title }}"</h2>
 
 <ul>
@@ -22,5 +24,4 @@
 </form>
 
 <a href="{% url 'quiz_list' %}">Back to Quizzes</a>
-
 {% endblock %}
