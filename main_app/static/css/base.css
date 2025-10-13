@@ -2,6 +2,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    
 }
 
 body {
@@ -85,6 +86,7 @@ body.no-hero .hero-header {
 }
 
 nav {
+    font-family: 'Markazi Text', serif;
     position: absolute;
     width: 100%;
     top: 0;
@@ -93,6 +95,7 @@ nav {
     background: transparent;
     z-index: 10;
     transition: background-color 0.4s ease, box-shadow 0.4s ease;
+    border-bottom: solid 2px #11182d;
 }
 
 .scrolled {
@@ -108,15 +111,15 @@ nav.scrolled ul li a:hover {
 
 
 nav ul {
-    display: flex; 
-    flex-direction: row; 
-    justify-content: center; 
-    list-style: none;  
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    list-style: none;
     padding: 0;
     margin: 0;
 }
 
-nav ul li a:hover {
+nav ul li a:hover , button:hover {
     color: #fbaf04;
 
 }
@@ -124,7 +127,6 @@ nav ul li a:hover {
 nav ul li a {
     color: #fff;
     text-decoration: none;
-    font-size: 18px;
     margin: 0 15px;
 }
 
@@ -132,7 +134,7 @@ main {
     position: relative;
     z-index: 3;
     background: #f4f4f4;
-    padding: 40px 0;
+    padding: 40px 0 0 0;
 }
 
 section {
@@ -171,7 +173,7 @@ footer {
     color: #fff;
     padding: 50px 20px 20px;
     text-align: center;
-    border-top: 2px solid #fbaf04;
+    border-top: 4px solid #fbaf04;
     position: relative;
 }
 
@@ -287,7 +289,8 @@ footer .footer-bottom p {
     outline: none;
     transition: all 0.3s ease;
 }
-.form-group input{
+
+.form-group input {
     min-height: 100px;
 }
 
@@ -319,4 +322,17 @@ textarea {
     background: #fff;
     color: #030617;
     transform: scale(1.05);
+}
+form{
+ display: flex;
+ flex-direction: column;
+ justify-content:center;
+}
+button{
+    cursor: pointer;
+    color: #fff;
+    background-color: transparent;
+    border: none;
+    text-align: center;
+    justify-self: center;
 }

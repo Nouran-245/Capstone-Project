@@ -12,31 +12,44 @@ from django.contrib.auth.models import User
 from .models import Quiz, Question, Choice, StudentAnswer, Result, Profile
 from .forms import QuizForm, QuestionForm, ChoiceForm
 from django.urls import reverse_lazy
+from .forms import SignUpForm
 
 
+
+# normal views
 def home(request):
     return render(request, "home.html")
 
+@login_required
+def profile_view(request, username):
+    user = get_object_or_404(User, username=username)
+    profile = getattr(user, "profile", None)
+    return render(request, "profile.html", {"profile": profile, "user": user})
 
+
+# authentication views
 def signup(request):
     error_message = ""
     if request.method == "POST":
-        form = UserCreationForm(request.POST)
+        form = SignUpForm(request.POST)
         if form.is_valid():
             user = form.save()
+            user_type = form.cleaned_data.get("user_type")
+            Profile.objects.create(user=user, user_type=user_type)
             login(request, user)
-            return redirect("quiz-list")
+            return redirect("quiz_list")
         else:
             error_message = "Invalid sign up - try again."
     else:
-        form = UserCreationForm()
+        form = SignUpForm()
     return render(request, "signup.html", {"form": form, "error_message": error_message})
-
 
 class CustomLoginView(LoginView):
     template_name = 'login.html'
 
 
+# quiz CRUD views
+    # Quiz Read View
 class QuizListView(ListView):
     model = Quiz
     template_name = 'main_app/quiz_list.html'
@@ -46,19 +59,17 @@ class QuizListView(ListView):
         context = super().get_context_data(**kwargs)
         context['form'] = QuizForm()
         return context
-
-
+    # Quiz Create View
 class QuizCreateView(LoginRequiredMixin, CreateView):
     model = Quiz
     form_class = QuizForm
     template_name = "main_app/quiz_list.html"
     success_url = reverse_lazy('quiz_list')
-
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super().form_valid(form)
-
-
+    # Quiz Create view
+@login_required
 def add_quiz(request, quiz_id):
     if request.method == 'POST':
         form = QuizForm(request.POST)
@@ -69,10 +80,8 @@ def add_quiz(request, quiz_id):
             return redirect('quiz_list')
     else:
         form = QuizForm()
-
     return render(request, 'main_app/question_list.html', {'form': form})
-
-
+    # Quiz Update View
 class QuizUpdateView(LoginRequiredMixin, UpdateView):
     model = Quiz
     fields = ['title', 'description']
@@ -80,15 +89,23 @@ class QuizUpdateView(LoginRequiredMixin, UpdateView):
     pk_url_kwarg = 'quiz_id'
     redirect_field_name = 'quiz_list'
     success_url = '/quizzes/'
-
-
-
+    # Quiz Delete View
+@login_required
 def QuizDeleteView(request, quiz_id):
         quiz = get_object_or_404(Quiz, id=quiz_id)
         if request.method == "POST":
             quiz.delete()
             return redirect("quiz_list")
         return render(request, "main_app/quiz_confirm_delete.html", {"quiz": quiz})
+
+
+
+
+
+
+
+
+
 
 
 class QuestionListView(LoginRequiredMixin, ListView):
@@ -164,12 +181,8 @@ def take_quiz(request, quiz_id):
                 score += 1
 
         Result.objects.create(user=request.user, quiz=quiz, score=score)
-        return redirect("quiz-list")
+        return redirect("quiz_list")
 
     return render(request, "take_quiz.html", {"quiz": quiz, "questions": questions})
 
 
-def profile_view(request, username):
-    user = get_object_or_404(User, username=username)
-    profile = getattr(user, "profile", None)
-    return render(request, "profile.html", {"profile": profile, "user": user})

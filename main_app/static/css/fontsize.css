@@ -19,3 +19,8 @@ pre {
 li {
     font-size: 25px;
 }
+
+button{
+    font-size: 25px;
+    font-family: 'Markazi Text', serif
+}

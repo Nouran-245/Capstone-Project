@@ -1,20 +1,16 @@
 {% extends 'base.html' %}
 {% load static %}
-
 {% block css %}
   <link rel="stylesheet" href="{% static 'css/other.css' %}" />
 {% endblock %}
-
 {% block title %}
   Quizzes - QuizVerse
 {% endblock %}
-
 {% block hero %}
-
 {% endblock %}
-
 {% block content %}
   <div class="auth-container quizzes-container">
+{% if not quiz %}
       <h2>Available Quizzes</h2>
 
       <div class="quiz-section">
@@ -34,6 +30,7 @@
           {% endfor %}
         </div>
       </div>
+    {% endif %}
 
     <div class="quiz-form">
       {% if not quiz %}

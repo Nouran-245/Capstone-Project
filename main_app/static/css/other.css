@@ -1,3 +1,8 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
 body {
     margin: 20px;
@@ -17,7 +22,7 @@ main {
     align-items: center;
     background: #030617;
     padding: 40px;
-    color: #ffffff;
+    color: #fbaf04;
 }
 
 
@@ -49,12 +54,13 @@ p label {
     width: 400px;
     text-align: center;
     box-shadow: 0 0 25px rgba(0, 0, 0, 0.4);
+    margin: 40px;
 }
 
 .auth-container h2 {
     font-size: 2em;
     margin-bottom: 20px;
-    color: #f8d36a;
+    color: #fbaf04;
 }
 
 .auth-container form p {
@@ -79,7 +85,7 @@ p label {
 }
 
 .auth-container button {
-    background: #f8d36a;
+    background: #fbaf04;
     color: #2c2c54;
     border: none;
     padding: 12px 25px;
@@ -91,7 +97,7 @@ p label {
 }
 
 .auth-container button:hover {
-    background: #ffd460;
+    background: #fbaf04;
     transform: scale(1.05);
 }
 
@@ -102,8 +108,8 @@ p label {
 }
 
 .auth-container a {
-    color: #ffd460;
-    text-decoration: underline;
+    color: #fbaf04;
+    text-decoration: none;
 }
 
 .quiz-list {

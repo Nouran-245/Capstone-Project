@@ -15,13 +15,8 @@
       <h2>Welcome to QuizVerse</h2>
       <p>Your ultimate destination for creating and taking quizzes online!</p>
       {% if user.is_authenticated %}
-        {% if user.profile.user_type == 'student' %}
-          <a href="{% url 'quiz_list' %}" class="btn">Get Started -1</a>
-        {% elif user.profile.user_type == 'teacher' %}
-          <a href="{% url 'quiz_list' %}" class="btn">Get Started-2</a>
-        {% endif %}
       {% else %}
-        <a href="{% url 'signup' %}" class="btn">Get Started-3</a>
+        <a href="{% url 'login' %}" class="btn">Get Started</a>
       {% endif %}
     </div>
     <div class="hero_image">
