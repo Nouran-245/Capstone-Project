@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/other.css' %}">
+{% endblock %}
+
+{% block title %}Questions - QuizVerse{% endblock %}
+
+{% block content %}
+<div class="auth-container">
+    <h2>Questions for "{{ quiz.title }}"</h2>
+
+    <ul class="quiz-list">
+        {% for question in questions %}
+            <li>
+                <strong>{{ question.text }}</strong>
+                {% if question.question_type in 'MC MA' %}
+                    <ul>
+                        {% for choice in question.choices.all %}
+                            <li>{{ choice.text }} {% if choice.is_correct %}<span style="color:#f8d36a;">(Correct)</span>{% endif %}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </li>
+        {% empty %}
+            <li>No questions yet.</li>
+        {% endfor %}
+    </ul>
+
+    <div class="quiz-form">
+        <h3>Add a Question</h3>
+        <form method="POST" id="question_form">
+            {% csrf_token %}
+            {{ form.text.label_tag }}<br>
+            {{ form.text }}<br><br>
+
+            {{ form.question_type.label_tag }}<br>
+            {{ form.question_type }}<br><br>
+
+            <div id="choices-container">
+                <h4>Choices (for MC/MA):</h4>
+                {% for i in 1|to:4 %}
+                <div>
+                    <input type="text" name="choice_{{ i }}" placeholder="Choice {{ i }}">
+                    <label><input type="checkbox" name="correct_{{ i }}"> Correct</label>
+                </div>
+                {% endfor %}
+            </div>
+
+            <button type="submit" class="btn">Add Question</button>
+        </form>
+    </div>
+</div>
+
+<script src="{% static 'js/question_form.js' %}"></script>
+{% endblock %}

@@ -1,22 +1,18 @@
 from django import forms
 from django.contrib.auth.models import User
-from .models import Profile, Quiz, Question
+from django.contrib.auth.forms import UserCreationForm
+from .models import Quiz, Question, Choice, Profile
 
-class SignUpForm(forms.ModelForm):
-    password = forms.CharField(widget=forms.PasswordInput)
-    confirm_password = forms.CharField(widget=forms.PasswordInput)
-    user_type = forms.ChoiceField(choices=Profile.USER_TYPES)
+class SignUpForm(UserCreationForm):
+    USER_TYPES = (
+        ('student', 'Student'),
+        ('teacher', 'Teacher'),
+    )
+    user_type = forms.ChoiceField(choices=USER_TYPES)
 
     class Meta:
         model = User
-        fields = ['username', 'email', 'password']
-
-    def clean(self):
-        cleaned_data = super().clean()
-        password = cleaned_data.get("password")
-        confirm_password = cleaned_data.get("confirm_password")
-        if password != confirm_password:
-            raise forms.ValidationError("Passwords do not match")
+        fields = ['username', 'email', 'password1', 'password2', 'user_type']
 
 class QuizForm(forms.ModelForm):
     class Meta:
@@ -26,4 +22,20 @@ class QuizForm(forms.ModelForm):
 class QuestionForm(forms.ModelForm):
     class Meta:
         model = Question
-        fields = ['text']
+        fields = ['text', 'question_type']
+        widgets = {
+            'text': forms.Textarea(attrs={'rows': 2, 'placeholder': 'Enter your question'}),
+            'question_type': forms.Select(attrs={'id': 'question_type_select'}),
+        }
+
+    class Meta:
+        model = Question
+        fields = ['text', 'question_type']
+
+class ChoiceForm(forms.ModelForm):
+    text = forms.CharField(label="Choice Text", widget=forms.TextInput(attrs={'class': 'form-control'}))
+    is_correct = forms.BooleanField(label="Correct?", required=False)
+
+    class Meta:
+        model = Choice
+        fields = ['text', 'is_correct']

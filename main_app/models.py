@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-# Profile for extra info like user type
+
 class Profile(models.Model):
     USER_TYPES = (
         ('student', 'Student'),
@@ -14,9 +14,9 @@ class Profile(models.Model):
         return f"{self.user.username} ({self.user_type})"
 
 
-# Quiz Models
 class Quiz(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='quizzes')
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name='quizzes')
     title = models.CharField(max_length=255)
     description = models.TextField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -25,16 +25,26 @@ class Quiz(models.Model):
         return self.title
 
 
-class Question(models.Model):
-    quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE, related_name='questions')
-    text = models.CharField(max_length=500)
+QUESTION_TYPES = (
+    ('MC', 'Multiple Choice'),
+    ('MA', 'Multiple Answer'),
+    ('SA', 'Short Answer'),
+    ('LA', 'Long Answer'),
+)
 
-    def __str__(self):
-        return self.text
+
+class Question(models.Model):
+
+    quiz = models.ForeignKey(
+        Quiz, on_delete=models.CASCADE, related_name='questions')
+    text = models.TextField()
+    question_type = models.CharField(
+        max_length=20, choices=QUESTION_TYPES, default='00')
 
 
 class Choice(models.Model):
-    question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name='choices')
+    question = models.ForeignKey(
+        Question, on_delete=models.CASCADE, related_name='choices')
     text = models.CharField(max_length=255)
     is_correct = models.BooleanField(default=False)
 
@@ -42,9 +52,26 @@ class Choice(models.Model):
         return f"{self.text} ({'Correct' if self.is_correct else 'Wrong'})"
 
 
+class StudentAnswer(models.Model):
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name='answers')
+    question = models.ForeignKey(
+        Question, on_delete=models.CASCADE, related_name='student_answers')
+    # If MCQ or MultiAnswer → store Choice references
+    selected_choices = models.ManyToManyField(Choice, blank=True)
+    # If Text question → store text response
+    text_answer = models.TextField(blank=True, null=True)
+    is_correct = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"{self.user.username} - {self.question.text}"
+
+
 class Result(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='results')
-    quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE, related_name='results')
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name='results')
+    quiz = models.ForeignKey(
+        Quiz, on_delete=models.CASCADE, related_name='results')
     score = models.IntegerField()
     taken_at = models.DateTimeField(auto_now_add=True)
 

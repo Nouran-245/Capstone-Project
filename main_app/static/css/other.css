@@ -1,0 +1,114 @@
+main {
+    position: relative;
+    z-index: 3;
+    background: #030617;
+    padding: 40px 0;
+    margin-top: 366px;
+    color: #ffffff;
+}
+
+
+body {
+    margin: 40px;
+    font-family: 'Markazi Text', serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 90vh;
+    background: #030617;
+    line-height: normal;
+}
+
+form ul li {
+    margin-bottom: 10px;
+    font-size: 18px;
+    color: #ffffffb4;
+    text-align: left;
+    margin-left: 30px;
+}
+
+p label {
+    font-size: 22px !important;
+}
+
+.auth-container {
+    background: rgba(255, 255, 255, 0.1);
+    -webkit-backdrop-filter: blur(15px);
+    backdrop-filter: blur(15px);
+    border-radius: 20px;
+    padding: 40px;
+    width: 400px;
+    text-align: center;
+    box-shadow: 0 0 25px rgba(0, 0, 0, 0.4);
+}
+
+.auth-container h2 {
+    font-size: 2em;
+    margin-bottom: 20px;
+    color: #f8d36a;
+}
+
+.auth-container form p {
+    text-align: left;
+    margin-bottom: 15px;
+}
+
+.auth-container label {
+    display: block;
+    font-size: 1.1em;
+    margin-bottom: 5px;
+    color: #ffffff;
+}
+
+.auth-container input {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.9);
+}
+
+.auth-container button {
+    background: #f8d36a;
+    color: #2c2c54;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s;
+    margin-top: 10px;
+}
+
+.auth-container button:hover {
+    background: #ffd460;
+    transform: scale(1.05);
+}
+
+.auth-container p {
+    margin-top: 15px;
+    font-size: 1em;
+    color: #ffffffb4;
+}
+
+.auth-container a {
+    color: #ffd460;
+    text-decoration: underline;
+}
+
+.quiz-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 60px;
+    background: #ffffff;
+    -webkit-backdrop-filter: blur(15px);
+    backdrop-filter: blur(15px);
+    border-radius: 15px;
+    padding: 40px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 0 25px rgba(0, 0, 0, 0.4);
+    color: #ffffffb4 !important;
+
+}

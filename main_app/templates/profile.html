@@ -1,1 +1,38 @@
-<p>Profile</p>
+{% extends 'base.html' %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/other.css' %}" />
+{% endblock %}
+
+{% block content %}
+<div class="auth-container">
+    <h2>Profile: {{ user.username }}</h2>
+
+    <p><strong>Email:</strong> {{ user.email }}</p>
+    <p><strong>User Type:</strong> {{ profile.user_type|capfirst }}</p>
+
+    {% if profile.user_type == 'teacher' %}
+        <h3>Your Quizzes</h3>
+        <ul>
+            {% for quiz in user.quizzes.all %}
+                <li>
+                    <a href="{% url 'question_list' quiz.id %}">{{ quiz.title }}</a>
+                    - {{ quiz.description }}
+                </li>
+            {% empty %}
+                <li>You haven't created any quizzes yet.</li>
+            {% endfor %}
+        </ul>
+    {% elif profile.user_type == 'student' %}
+        <h3>Quizzes Taken</h3>
+        <ul>
+            {% for result in user.results.all %}
+                <li>{{ result.quiz.title }} - Score: {{ result.score }}</li>
+            {% empty %}
+                <li>You haven't taken any quizzes yet.</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+</div>
+{% endblock %}
