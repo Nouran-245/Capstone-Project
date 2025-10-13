@@ -53,12 +53,13 @@ class QuizCreateView(LoginRequiredMixin, CreateView):
     form_class = QuizForm
     template_name = "main_app/quiz_list.html"
     success_url = reverse_lazy('quiz_list')
+
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super().form_valid(form)
 
 
-def add_quiz(request,quiz_id):
+def add_quiz(request, quiz_id):
     if request.method == 'POST':
         form = QuizForm(request.POST)
         if form.is_valid():
@@ -72,18 +73,22 @@ def add_quiz(request,quiz_id):
     return render(request, 'main_app/question_list.html', {'form': form})
 
 
-
 class QuizUpdateView(LoginRequiredMixin, UpdateView):
     model = Quiz
-    form_class = QuizForm
-    template_name = "quiz_list.html"
-    success_url = reversed("quiz-list")
+    fields = ['title', 'description']
+    template_name = 'main_app/quiz_list.html'
+    pk_url_kwarg = 'quiz_id'
+    redirect_field_name = 'quiz_list'
+    success_url = '/quizzes/'
 
 
-class QuizDeleteView(LoginRequiredMixin, DeleteView):
-    model = Quiz
-    template_name = "quiz_confirm_delete.html"
-    success_url = reversed("quiz-list")
+
+def QuizDeleteView(request, quiz_id):
+        quiz = get_object_or_404(Quiz, id=quiz_id)
+        if request.method == "POST":
+            quiz.delete()
+            return redirect("quiz_list")
+        return render(request, "main_app/quiz_confirm_delete.html", {"quiz": quiz})
 
 
 class QuestionListView(LoginRequiredMixin, ListView):

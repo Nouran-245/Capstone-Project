@@ -1,23 +1,32 @@
-main {
-    position: relative;
-    z-index: 3;
+
+body {
+    margin: 20px;
+    font-family: 'Markazi Text', serif;
     background: #030617;
-    padding: 40px 0;
-    margin-top: 366px;
+    line-height: normal;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 90vh;
+}
+
+main {
+    display: flex;
+    flex-direction:column;
+    justify-content: center;
+    align-items: center;
+    background: #030617;
+    padding: 40px;
     color: #ffffff;
 }
 
 
-body {
-    margin: 40px;
-    font-family: 'Markazi Text', serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 90vh;
-    background: #030617;
-    line-height: normal;
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
 }
+
 
 form ul li {
     margin-bottom: 10px;
@@ -60,6 +69,7 @@ p label {
     color: #ffffff;
 }
 
+
 .auth-container input {
     width: 100%;
     padding: 10px;
@@ -96,22 +106,65 @@ p label {
     text-decoration: underline;
 }
 
+.quiz-list {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.quiz-item {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    width: 250px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    gap: 10px;
+}
+
+.quiz-title {
+    font-weight: bold;
+    text-align: left;
+    flex: 1;
+}
+
+.quiz-cruds {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+
+.quiz-cruds a {
+    color: #555;
+    font-size: 18px;
+    text-decoration: none;
+}
+
+.quiz-cruds a:hover {
+    color: #000;
+}
+
 .quiz-section {
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: flex-start;
+    align-items: flex-start;
     margin-bottom: 60px;
-    background: #ffffff;
+    background: rgba(255, 255, 255, 0.05);
     -webkit-backdrop-filter: blur(15px);
     backdrop-filter: blur(15px);
     border-radius: 15px;
     padding: 40px;
     width: 100%;
-    text-align: center;
+    text-align: left;
     box-shadow: 0 0 25px rgba(0, 0, 0, 0.4);
-    color: #ffffffb4 !important;
-
+    color: #ffffffb4;
 }
+
+
 .form-group input,
 .form-group textarea {
     flex: 1;
@@ -123,4 +176,8 @@ p label {
     color: #fff;
     outline: none;
     transition: all 0.3s ease;
+}
+
+textarea#id_description {
+    border-radius: 10px;
 }

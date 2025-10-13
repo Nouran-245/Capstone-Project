@@ -15,27 +15,42 @@
 
 {% block content %}
   <div class="auth-container quizzes-container">
-    <h2>Available Quizzes</h2>
+      <h2>Available Quizzes</h2>
 
-    <div class="quiz-section">
-      <ul class="quiz-list">
-        {% for quiz in quizzes %}
-          <li class="quiz-item">
-            <a href="{% url 'question_list' quiz.id %}" class="quiz-link">{{ quiz.title }}</a>
-          </li>
-        {% empty %}
-          <li>No quizzes yet.</li>
-        {% endfor %}
-      </ul>
-    </div>
+      <div class="quiz-section">
+        <div class="quiz-list">
+          {% for quiz in quizzes %}
+            <div class="quiz-item">
+              <div class="quiz-title">
+                <a href="{% url 'question_list' quiz.id %}" class="quiz-link">{{ quiz.title }}</a>
+              </div>
+              <div class="quiz-cruds">
+                <a href="{% url 'quiz_update' quiz.id %}"><i class="fa-solid fa-pen-to-square"></i></a>
+                <a href="{% url 'quiz_confirm_delete' quiz.id %}"><i class="fa-solid fa-trash"></i></a>
+              </div>
+            </div>
+          {% empty %}
+            <div>No quizzes yet.</div>
+          {% endfor %}
+        </div>
+      </div>
 
     <div class="quiz-form">
-      <h3>Create a New Quiz</h3>
-      <form method="post" action="{% url 'quiz_add'%}" >
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="btn">Add Quiz</button>
-      </form>
+      {% if not quiz %}
+        <h3>Create a New Quiz</h3>
+        <form method="post" action="{% url 'quiz_add' %}">
+          {% csrf_token %}
+          {{ form.as_p }}
+          <button type="submit" class="btn">Add Quiz</button>
+        </form>
+      {% else %}
+        <h3>Update Quiz Info</h3>
+        <form method="post" action="{% url 'quiz_update' quiz.id %}">
+          {% csrf_token %}
+          {{ form.as_p }}
+          <button type="submit" class="btn">Update Quiz</button>
+        </form>
+      {% endif %}
     </div>
   </div>
 {% endblock %}

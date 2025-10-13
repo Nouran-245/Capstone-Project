@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block css %}
+  <link rel="stylesheet" href="{% static 'css/other.css' %}" />
+{% endblock %}
+{% block content %}
+  <h2>Confirm Deletion</h2>
+  <p>Are you sure you want to delete "{{ object }}"?</p>
+  <form method="post" action="{% url 'quiz_confirm_delete' quiz.id %}">
+    {% csrf_token %}
+    <button type="submit">Yes, delete</button>
+    <a href="{% url 'quiz_list' %}">Cancel</a>
+  </form>
+{% endblock %}
