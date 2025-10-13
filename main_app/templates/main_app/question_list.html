@@ -40,7 +40,7 @@
 
             <div id="choices-container">
                 <h4>Choices (for MC/MA):</h4>
-                {% for i in 1|to:4 %}
+                {% for i in 1 to:4 %}
                 <div>
                     <input type="text" name="choice_{{ i }}" placeholder="Choice {{ i }}">
                     <label><input type="checkbox" name="correct_{{ i }}"> Correct</label>

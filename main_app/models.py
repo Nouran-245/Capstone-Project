@@ -15,8 +15,7 @@ class Profile(models.Model):
 
 
 class Quiz(models.Model):
-    user = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name='quizzes')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='quizzes')
     title = models.CharField(max_length=255)
     description = models.TextField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -34,12 +33,9 @@ QUESTION_TYPES = (
 
 
 class Question(models.Model):
-
-    quiz = models.ForeignKey(
-        Quiz, on_delete=models.CASCADE, related_name='questions')
+    quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE, related_name='questions')
     text = models.TextField()
-    question_type = models.CharField(
-        max_length=20, choices=QUESTION_TYPES, default='00')
+    question_type = models.CharField(max_length=20, choices=QUESTION_TYPES, default='00')
 
 
 class Choice(models.Model):
@@ -57,9 +53,7 @@ class StudentAnswer(models.Model):
         User, on_delete=models.CASCADE, related_name='answers')
     question = models.ForeignKey(
         Question, on_delete=models.CASCADE, related_name='student_answers')
-    # If MCQ or MultiAnswer → store Choice references
     selected_choices = models.ManyToManyField(Choice, blank=True)
-    # If Text question → store text response
     text_answer = models.TextField(blank=True, null=True)
     is_correct = models.BooleanField(default=False)
 

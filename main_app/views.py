@@ -1,7 +1,6 @@
 # main_app/views.py
 
 from django.shortcuts import render, redirect, get_object_or_404
-from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView, DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -12,7 +11,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from .models import Quiz, Question, Choice, StudentAnswer, Result, Profile
 from .forms import QuizForm, QuestionForm, ChoiceForm
-
+from django.urls import reverse_lazy
 
 
 def home(request):
@@ -34,45 +33,61 @@ def signup(request):
     return render(request, "signup.html", {"form": form, "error_message": error_message})
 
 
-
 class CustomLoginView(LoginView):
     template_name = 'login.html'
 
 
-
 class QuizListView(ListView):
     model = Quiz
-    template_name = 'quizzes/quiz_list.html'
+    template_name = 'main_app/quiz_list.html'
     context_object_name = 'quizzes'
-    
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form'] = QuizForm()
+        return context
+
 class QuizCreateView(LoginRequiredMixin, CreateView):
     model = Quiz
     form_class = QuizForm
-    template_name = "quiz_form.html"
-    success_url = reverse_lazy("quiz-list")
-
+    template_name = "main_app/quiz_list.html"
+    success_url = reverse_lazy('quiz_list')
     def form_valid(self, form):
-        form.instance.user = self.request.user  # assign logged-in teacher
+        form.instance.user = self.request.user
         return super().form_valid(form)
+
+
+def add_quiz(request,quiz_id):
+    if request.method == 'POST':
+        form = QuizForm(request.POST)
+        if form.is_valid():
+            new_quiz = form.save(commit=False)
+            new_quiz.user = request.user
+            new_quiz.save()
+            return redirect('quiz_list')
+    else:
+        form = QuizForm()
+
+    return render(request, 'main_app/quiz_list.html', {'form': form})
+
+
 
 class QuizUpdateView(LoginRequiredMixin, UpdateView):
     model = Quiz
     form_class = QuizForm
-    template_name = "quiz_form.html"
-    success_url = reverse_lazy("quiz-list")
+    template_name = "quiz_list.html"
+    success_url = reversed("quiz-list")
+
 
 class QuizDeleteView(LoginRequiredMixin, DeleteView):
     model = Quiz
     template_name = "quiz_confirm_delete.html"
-    success_url = reverse_lazy("quiz-list")
+    success_url = reversed("quiz-list")
 
 
-# ---------------------------
-# QUESTION CRUD
-# ---------------------------
 class QuestionListView(LoginRequiredMixin, ListView):
     model = Question
-    template_name = "question_list.html"
+    template_name = "main_app/question_list.html"
     context_object_name = "questions"
 
     def get_queryset(self):
@@ -85,6 +100,7 @@ class QuestionListView(LoginRequiredMixin, ListView):
         context["form"] = QuestionForm()
         return context
 
+
 class QuestionCreateView(LoginRequiredMixin, CreateView):
     model = Question
     form_class = QuestionForm
@@ -96,7 +112,8 @@ class QuestionCreateView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
     def get_success_url(self):
-        return reverse_lazy("question-list", kwargs={"quiz_id": self.kwargs["quiz_id"]})
+        return reversed("question-list", kwargs={"quiz_id": self.kwargs["quiz_id"]})
+
 
 class QuestionUpdateView(LoginRequiredMixin, UpdateView):
     model = Question
@@ -104,14 +121,15 @@ class QuestionUpdateView(LoginRequiredMixin, UpdateView):
     template_name = "question_form.html"
 
     def get_success_url(self):
-        return reverse_lazy("question-list", kwargs={"quiz_id": self.object.quiz.id})
+        return reversed("question-list", kwargs={"quiz_id": self.object.quiz.id})
+
 
 class QuestionDeleteView(LoginRequiredMixin, DeleteView):
     model = Question
     template_name = "question_confirm_delete.html"
 
     def get_success_url(self):
-        return reverse_lazy("question-list", kwargs={"quiz_id": self.object.quiz.id})
+        return reversed("question-list", kwargs={"quiz_id": self.object.quiz.id})
 
 
 @login_required
@@ -125,7 +143,8 @@ def take_quiz(request, quiz_id):
             selected_ids = request.POST.getlist(f"question_{question.id}")
             selected_choices = Choice.objects.filter(id__in=selected_ids)
 
-            correct_ids = question.choices.filter(is_correct=True).values_list('id', flat=True)
+            correct_ids = question.choices.filter(
+                is_correct=True).values_list('id', flat=True)
             is_correct = set(map(int, selected_ids)) == set(correct_ids)
 
             student_answer = StudentAnswer.objects.create(
@@ -144,9 +163,6 @@ def take_quiz(request, quiz_id):
     return render(request, "take_quiz.html", {"quiz": quiz, "questions": questions})
 
 
-# ---------------------------
-# PROFILE
-# ---------------------------
 def profile_view(request, username):
     user = get_object_or_404(User, username=username)
     profile = getattr(user, "profile", None)

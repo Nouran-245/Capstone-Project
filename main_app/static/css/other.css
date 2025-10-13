@@ -112,3 +112,15 @@ p label {
     color: #ffffffb4 !important;
 
 }
+.form-group input,
+.form-group textarea {
+    flex: 1;
+    padding: 15px;
+    font-size: 16px;
+    border: none;
+    border-radius: 6px;
+    background: #11182d;
+    color: #fff;
+    outline: none;
+    transition: all 0.3s ease;
+}

@@ -1,17 +1,16 @@
-document.addEventListener('DOMContentLoaded', function() {
-    const typeSelect = document.getElementById('question_type_select');
-    const choicesContainer = document.getElementById('choices-container');
+document.addEventListener("DOMContentLoaded", function () {
+    const navbar = document.getElementById('main-navbar');
+    const scrollThreshold = 50;
 
-    function updateForm() {
-        const value = typeSelect.value;
-
-        if (value === 'MC' || value === 'MA') {
-            choicesContainer.style.display = 'block';
+    function toggleNavbarClass() {
+        if (window.scrollY > scrollThreshold) {
+            navbar.classList.add('scrolled');
         } else {
-            choicesContainer.style.display = 'none';
+            navbar.classList.remove('scrolled');
         }
     }
 
-    typeSelect.addEventListener('change', updateForm);
-    updateForm();
+    window.addEventListener('scroll', toggleNavbarClass);
+    toggleNavbarClass();
 });
+
