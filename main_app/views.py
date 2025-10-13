@@ -47,6 +47,7 @@ class QuizListView(ListView):
         context['form'] = QuizForm()
         return context
 
+
 class QuizCreateView(LoginRequiredMixin, CreateView):
     model = Quiz
     form_class = QuizForm
@@ -68,7 +69,7 @@ def add_quiz(request,quiz_id):
     else:
         form = QuizForm()
 
-    return render(request, 'main_app/quiz_list.html', {'form': form})
+    return render(request, 'main_app/question_list.html', {'form': form})
 
 
 
@@ -87,7 +88,7 @@ class QuizDeleteView(LoginRequiredMixin, DeleteView):
 
 class QuestionListView(LoginRequiredMixin, ListView):
     model = Question
-    template_name = "main_app/question_list.html"
+    template_name = "mainquestion_list.html"
     context_object_name = "questions"
 
     def get_queryset(self):

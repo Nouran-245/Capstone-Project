@@ -1,57 +1,43 @@
-{% extends 'base.html' %}
-{% load static %}
+{% extends 'base.html' %} {% load static %} {% block css %}
+  <link rel="stylesheet" href="{% static 'css/other.css' %}" />
+{% endblock %} {% block title %}
+  Questions - QuizVerse
+{% endblock %} {% block hero %}
 
-{% block css %}
-<link rel="stylesheet" href="{% static 'css/other.css' %}">
-{% endblock %}
-
-{% block title %}Questions - QuizVerse{% endblock %}
-
-{% block content %}
-<div class="auth-container">
-    <h2>Questions for "{{ quiz.title }}"</h2>
-
-    <ul class="quiz-list">
-        {% for question in questions %}
-            <li>
-                <strong>{{ question.text }}</strong>
-                {% if question.question_type in 'MC MA' %}
-                    <ul>
-                        {% for choice in question.choices.all %}
-                            <li>{{ choice.text }} {% if choice.is_correct %}<span style="color:#f8d36a;">(Correct)</span>{% endif %}</li>
-                        {% endfor %}
-                    </ul>
+{% endblock %} {% block content %}
+  <div class="auth-container">
+    <h2>Questions for "{{ quiz.title }}"</h2> <ul class="quiz-list">
+      {% for question in questions %}
+        <li class="quiz-item">
+          <strong>{{ question.text }}</strong> <ul>
+            {% for choice in question.choices.all %}
+              <li>
+                {{ choice.text }} {% if choice.is_correct %}
+                  <span style="color:#f8d36a;">(Correct)</span>
                 {% endif %}
-            </li>
-        {% empty %}
-            <li>No questions yet.</li>
-        {% endfor %}
-    </ul>
-
-    <div class="quiz-form">
-        <h3>Add a Question</h3>
-        <form method="POST" id="question_form">
-            {% csrf_token %}
-            {{ form.text.label_tag }}<br>
-            {{ form.text }}<br><br>
-
-            {{ form.question_type.label_tag }}<br>
-            {{ form.question_type }}<br><br>
-
-            <div id="choices-container">
-                <h4>Choices (for MC/MA):</h4>
-                {% for i in 1 to:4 %}
-                <div>
-                    <input type="text" name="choice_{{ i }}" placeholder="Choice {{ i }}">
-                    <label><input type="checkbox" name="correct_{{ i }}"> Correct</label>
-                </div>
-                {% endfor %}
-            </div>
-
-            <button type="submit" class="btn">Add Question</button>
-        </form>
-    </div>
-</div>
-
-<script src="{% static 'js/question_form.js' %}"></script>
+              </li>
+            {% endfor %}
+          </ul>
+        </li>
+      {% empty %}
+        <li>No questions yet.</li>
+      {% endfor %}
+    </ul> <div class="quiz-form">
+      <h3>Add a Question</h3> <form method="POST">
+        {% csrf_token %} {{ form.text.label_tag }}<br /> {{ form.text }} <br /><br /> <label for="question_type">Question Type:</label> <select name="question_type" id="question_type">
+          <option value="MC">Multiple Choice (Single Answer)</option> <option value="MultiAnswer">Multiple Answers</option>
+        </select> <div id="choices-container">
+          <h4>Choices:</h4> <div>
+            <input type="text" name="choice_1" placeholder="Choice 1" /> <label><input type="checkbox" name="correct_1" />Correct</label>
+          </div> <div>
+            <input type="text" name="choice_2" placeholder="Choice 2" /> <label><input type="checkbox" name="correct_2" />Correct</label>
+          </div> <div>
+            <input type="text" name="choice_3" placeholder="Choice 3" /> <label><input type="checkbox" name="correct_3" />Correct</label>
+          </div> <div>
+            <input type="text" name="choice_4" placeholder="Choice 4" /> <label><input type="checkbox" name="correct_4" />Correct</label>
+          </div>
+        </div> <button type="submit" class="btn">Add Question</button>
+      </form>
+    </div> <a href="{% url 'quiz_list' %}">Back to Quizzes</a>
+  </div>
 {% endblock %}
