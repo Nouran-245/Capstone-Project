@@ -2,7 +2,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    
+
 }
 
 body {
@@ -58,6 +58,7 @@ body.no-hero .hero-header {
     text-align: left;
     background: transparent !important;
     box-shadow: none !important;
+    min-height: 90vh;
 }
 
 
@@ -76,13 +77,21 @@ body.no-hero .hero-header {
 .hero-content a {
     display: inline-block;
     margin-top: 20px;
-    padding: 20px 20px;
+    padding: 20px 60px;
     background: #fbaf04;
     color: #030617;
     text-decoration: none;
-    border-radius: 5px;
+    border-radius: 15px;
     font-size: 20px;
     transition: background 0.3s ease;
+    font-family: 'Markazi Text', serif;
+    font-size: 30px;
+}
+
+main h2 {
+    font-family: 'Markazi Text', serif;
+    font-size: 55px;
+
 }
 
 nav {
@@ -119,7 +128,8 @@ nav ul {
     margin: 0;
 }
 
-nav ul li a:hover , button:hover {
+nav ul li a:hover,
+button:hover {
     color: #fbaf04;
 
 }
@@ -323,12 +333,14 @@ textarea {
     color: #030617;
     transform: scale(1.05);
 }
-form{
- display: flex;
- flex-direction: column;
- justify-content:center;
+
+form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
-button{
+
+button {
     cursor: pointer;
     color: #fff;
     background-color: transparent;

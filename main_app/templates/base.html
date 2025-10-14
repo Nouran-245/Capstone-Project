@@ -22,27 +22,26 @@
 
 {% if request.resolver_match.url_name != 'login' and request.resolver_match.url_name != 'signup' %}
 <nav id="main-navbar" class="transparent-nav">
-    <ul>
-        {% if user.is_authenticated %}
-            <li>
-                <a href="{% url 'profile' user.username %}">
-                    {{ user.username }}
-                </a>
-            </li>
-        {% endif %}
-        <li><a href="{% url 'home' %}">Main</a></li>
-        <li><a href="{% url 'signup'%}">SignUp</a></li>
-        <li><a href="{% url 'login'%}">SignIn</a></li>
-
-        {% if user.is_authenticated %}
-            <li><a href="{% url 'quiz_list' %}">Quizzes</a></li>
-            <form method="post" action="{% url 'logout' %}">
-                {% csrf_token %}
-                <button type="submit">Logout</button>
-            </form>
-        {% endif %}
-    </ul>
+  <ul>
+    {% if user.is_authenticated %}
+      <li>
+        <a href="{% url 'profile' user.username %}">{{ user.username }}</a>
+      </li>
+      <li><a href="{% url 'home' %}">Main</a></li>
+      <li><a href="{% url 'quiz_list' %}">Quizzes</a></li>
+      <form method="post" action="{% url 'logout' %}">
+        {% csrf_token %}
+        <button type="submit">Logout</button>
+      </form>
+    {% else %}
+      {% if url != 'signup' and url != 'login' and url != 'main' %}
+        <li><a href="{% url 'signup' %}">Sign Up</a></li>
+        <li><a href="{% url 'login' %}">Sign In</a></li>
+      {% endif %}
+    {% endif %}
+  </ul>
 </nav>
+
 {% endif %}
     <main>
     {% block content %}
