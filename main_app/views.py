@@ -19,9 +19,34 @@ from .forms import SignUpForm
 def main(request):
     return render(request, "main.html")
 
+
 @login_required
 def homepage(request):
-    return render(request, "homepage.html")
+    profile = Profile.objects.get(user=request.user)
+
+    if profile.user_type == 'teacher':
+        quizzes = Quiz.objects.filter(user=request.user)
+    elif profile.user_type == 'student':
+        quizzes = Quiz.objects.all()
+    else:
+        quizzes = []
+
+    return render(request, "homepage.html", {
+        'profile': profile,
+        'quizzes': quizzes, })
+
+def attempt_quiz(request, quiz_id):
+    profile = Profile.objects.get(user=request.user)
+    quiz = get_object_or_404(Quiz, id=quiz_id)
+    questions = Question.objects.filter(quiz=quiz)
+    choices = Choice.objects.filter(question__in=questions)
+
+    return render(request, "attempt_quiz.html", {
+        'profile': profile,
+        'quiz': quiz,
+        'questions': questions,
+        'choices': choices
+    })
 
 @login_required
 def profile_view(request, username):
@@ -40,7 +65,7 @@ def signup(request):
             user_type = form.cleaned_data.get("user_type")
             Profile.objects.create(user=user, user_type=user_type)
             login(request, user)
-            return redirect('quiz_list')
+            return redirect('homepage')
         else:
             error_message = "Invalid sign up - try again."
     else:
@@ -51,7 +76,7 @@ def signup(request):
 class CustomLoginView(LoginView):
     template_name = 'login.html'
     redirect_authenticated_user = True
-    next_page = reverse_lazy('quiz_list')
+    next_page = reverse_lazy('homepage')
 
 
 # quiz CRUD views
@@ -181,21 +206,26 @@ def QuestionDeleteView(request, quiz_id, question_id):
     return render(request, "main_app/question_confirm_delete.html", {"question": question, "quiz": quiz})
 
 # Choice CRUD views
+
+
 class ChoiceListView(LoginRequiredMixin, ListView):
     model = Choice
     template_name = "main_app/Choice.html"
     context_object_name = "choices"
     # as i read here i need only the parent id not all family id :)
+
     def get_queryset(self):
         question_id = self.kwargs["question_id"]
         return Choice.objects.filter(question_id=question_id)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["question"] = Question.objects.get(id=self.kwargs["question_id"])
+        context["question"] = Question.objects.get(
+            id=self.kwargs["question_id"])
         context["quiz"] = context["question"].quiz  # grandparent
         context["form"] = ChoiceForm()
         return context
+
 
 class ChoiceCreateView(LoginRequiredMixin, CreateView):
     model = Choice
@@ -208,26 +238,27 @@ class ChoiceCreateView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
     def get_success_url(self):
-        return reverse("choice_list", kwargs={"quiz_id": self.kwargs["quiz_id"],"question_id": self.kwargs["question_id"]})
-    
+        return reverse("choice_list", kwargs={"quiz_id": self.kwargs["quiz_id"], "question_id": self.kwargs["question_id"]})
+
 
 class ChoiceUpdateView(LoginRequiredMixin, UpdateView):
     model = Choice
-    fields = ['text' ,'is_correct']
+    fields = ['text', 'is_correct']
     template_name = 'main_app/choice_list.html'
     pk_url_kwarg = 'choice_id'
     redirect_field_name = 'choice_list'
 
     def get_success_url(self):
-        return reverse("choice_list", kwargs={"quiz_id": self.kwargs["quiz_id"],"question_id": self.kwargs["question_id"]})
+        return reverse("choice_list", kwargs={"quiz_id": self.kwargs["quiz_id"], "question_id": self.kwargs["question_id"]})
 
     # Choice Delete view
-def ChoiceDeleteView(request, quiz_id, question_id ,choice_id):
+
+
+def ChoiceDeleteView(request, quiz_id, question_id, choice_id):
     choice = get_object_or_404(Choice, question__id=question_id, id=choice_id)
     if request.method == "POST":
         choice.delete()
-        return redirect("choice_list",quiz_id=quiz_id ,question_id=question_id)
+        return redirect("choice_list", quiz_id=quiz_id, question_id=question_id)
     quiz = choice.question.quiz
     question = choice.question
-    return render(request, "main_app/choice_confirm_delete.html", {"choice":choice,"question": question, "quiz": quiz})
-
+    return render(request, "main_app/choice_confirm_delete.html", {"choice": choice, "question": question, "quiz": quiz})

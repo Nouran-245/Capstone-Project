@@ -15,7 +15,8 @@ class Profile(models.Model):
 
 
 class Quiz(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='quizzes')
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name='quizzes')
     title = models.CharField(max_length=255)
     description = models.TextField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -25,13 +26,13 @@ class Quiz(models.Model):
 
 
 class Question(models.Model):
-    quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE, related_name='questions')
+    quiz = models.ForeignKey(
+        Quiz, on_delete=models.CASCADE, related_name='questions')
     text = models.TextField()
 
 
 class Choice(models.Model):
-    question = models.ForeignKey(
-        Question, on_delete=models.CASCADE, related_name='choices')
+    question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name='choices')
     text = models.CharField(max_length=255)
     is_correct = models.BooleanField(default=False)
 
@@ -40,10 +41,8 @@ class Choice(models.Model):
 
 
 class StudentAnswer(models.Model):
-    user = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name='answers')
-    question = models.ForeignKey(
-        Question, on_delete=models.CASCADE, related_name='student_answers')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='answers')
+    question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name='student_answers')
     selected_choices = models.ManyToManyField(Choice, blank=True)
     text_answer = models.TextField(blank=True, null=True)
     is_correct = models.BooleanField(default=False)
@@ -53,10 +52,8 @@ class StudentAnswer(models.Model):
 
 
 class Result(models.Model):
-    user = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name='results')
-    quiz = models.ForeignKey(
-        Quiz, on_delete=models.CASCADE, related_name='results')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='results')
+    quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE, related_name='results')
     score = models.IntegerField()
     taken_at = models.DateTimeField(auto_now_add=True)
 

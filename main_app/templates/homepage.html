@@ -4,28 +4,97 @@
 {% block css %}
   <link rel="stylesheet" href="{% static 'css/other.css' %}" />
 {% endblock %}
+
 {% block content %}
-  <h1>HELLO WELCOME TO HOME PAGE</h1>
-  {% if profile.user_type == 'teacher' %}
-    <h3>Your Quizzes</h3>
-    <ul>
-      {% for quiz in user.quizzes.all %}
-        <li>
-          <a href="{% url 'question_list' quiz.id %}">{{ quiz.title }}</a>
-          - {{ quiz.description }}
-        </li>
-      {% empty %}
-        <li>You haven't created any quizzes yet.</li>
-      {% endfor %}
-    </ul>
-  {% elif profile.user_type == 'student' %}
-    <h3>Quizzes Taken</h3>
-    <ul>
-      {% for result in user.results.all %}
-        <li>{{ result.quiz.title }} - Score: {{ result.score }}</li>
-      {% empty %}
-        <li>You haven't taken any quizzes yet.</li>
-      {% endfor %}
-    </ul>
-  {% endif %}
+  <div class="auth-container quizzes-container">
+    <h1>HELLO {{ profile.user.username }} , WELCOME</h1>
+
+    {% if profile.user_type == 'teacher' %}
+      <h3>Your Created Quizzes</h3>
+
+      {% if user.quizzes.all %}
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Creator Name</th>
+              <th>Quiz Title</th>
+              <th>Description</th>
+              <th>Created At</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for quiz in user.quizzes.all %}
+              <tr>
+                <td>{{ quiz.user.username }}</td>
+                <td>
+                  <a href="{% url 'question_list' quiz.id %}">{{ quiz.title }}</a>
+                </td>
+                <td>{{ quiz.description }}</td>
+                <td>{{ quiz.created_at|date:'Y-m-d H:i' }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      {% else %}
+        <p>You haven't created any quizzes yet.</p>
+      {% endif %}
+    {% elif profile.user_type == 'student' %}
+      <h3>All Available Quizzes</h3>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Teacher Name</th>
+            <th>Quiz Title</th>
+            <th>Description</th>
+            <th>Created At</th>
+            <th>Attempt</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for quiz in quizzes.all %}
+            <tr>
+              <td>{{ quiz.user.username }}</td>
+              <td>
+                <a href="{% url 'question_list' quiz.id %}">{{ quiz.title }}</a>
+              </td>
+              <td>{{ quiz.description }}</td>
+              <td>{{ quiz.created_at|date:'Y-m-d H:i' }}</td>
+              <td class="tdbtn">
+                <a href="{% url 'attempt_quiz' quiz.id%}" class="btn">Start Now</a>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+      <h3>Your Taken Quizzes</h3>
+
+      {% if user.results.all %}
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Taker Name</th>
+              <th>Quiz Title</th>
+              <th>Description</th>
+              <th>Score</th>
+              <th>Taken At</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for result in user.results.all %}
+              <tr>
+                <td>{{ result.user.username }}</td>
+                <td>{{ result.quiz.title }}</td>
+                <td>{{ result.quiz.description }}</td>
+                <td>{{ result.score }}</td>
+                <td>{{ result.created_at|date:'Y-m-d H:i' }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      {% else %}
+        <p>You haven't taken any quizzes yet.</p>
+      {% endif %}
+    {% endif %}
+  </div>
 {% endblock %}

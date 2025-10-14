@@ -10,6 +10,7 @@ body {
     background: #030617;
     line-height: normal;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     min-height: 90vh;
@@ -24,10 +25,13 @@ main {
     padding: 40px;
     color: #fbaf04;
 }
-
+footer{
+    min-width: 500px;;
+}
 
 .container {
-    max-width: 1200px;
+    width: 80%;
+    min-width: 1200px;
     margin: 0 auto;
     padding: 0 20px;
 }
@@ -51,10 +55,10 @@ p label {
     backdrop-filter: blur(15px);
     border-radius: 20px;
     padding: 40px;
-    width: 400px;
+    min-width: 600px;
+    margin: auto;
     text-align: center;
     box-shadow: 0 0 25px rgba(0, 0, 0, 0.4);
-    margin: 40px;
 }
 
 .auth-container h2 {
@@ -165,7 +169,7 @@ main .delete-form button {
 }
 
 .quiz-title {
-    color:#333;
+    color: #333;
     font-weight: bold;
     text-align: left;
     flex: 1;
@@ -222,6 +226,255 @@ textarea#id_description {
     border-radius: 10px;
 }
 
-.question-h2{
+.question-h2 {
     font-size: 25px !important;
+}
+
+/* Table container styling */
+.quizzes-container {
+    max-width: 1000px;
+    margin: 50px auto;
+    padding: 30px;
+    background: rgba(255, 255, 255, 0.08);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    color: #fff;
+}
+
+/* Headings */
+.quizzes-container h1 {
+    text-align: center;
+    margin-bottom: 10px;
+    font-size: 2rem;
+    letter-spacing: 1px;
+    font-weight: 600;
+}
+
+.quizzes-container h3 {
+    margin: 30px 0 15px;
+    font-weight: 500;
+    text-align: center;
+    border-bottom: 2px solid #fbaf04;
+    display: inline-block;
+    padding-bottom: 5px;
+}
+
+/* Table styling */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    font-size: 0.95rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.table thead {
+    background-color: rgba(255, 215, 0, 0.1);
+    color: #fbaf04;
+}
+
+.table th,
+.table td {
+    padding: 12px 16px;
+    text-align: left;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Links inside table */
+.table a {
+    color: #fbaf04;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.table a:hover {
+    text-decoration: underline;
+}
+
+/* Hover effect for rows */
+.table tbody tr:hover {
+    background-color: rgba(255, 255, 255, 0.08);
+    transition: background-color 0.2s ease-in-out;
+}
+
+/* Empty state message */
+.quizzes-container p {
+    text-align: center;
+    color: #ccc;
+    font-style: italic;
+    margin-top: 10px;
+}
+
+.tdbtn a {
+    font-size: 14px !important;
+    padding: 1px 2px;
+}
+
+/* =============================== */
+/* HOMEPAGE TABLE + CONTAINER OPTIMIZATION */
+/* =============================== */
+
+/* Main wrapper adjustment */
+.auth-container.quizzes-container {
+    max-width: 1100px;
+    margin: 60px auto;
+    padding: 50px 40px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Headings spacing */
+.auth-container.quizzes-container h1 {
+    font-size: 2.3rem;
+    margin-bottom: 30px;
+    text-align: center;
+    color: #fbaf04;
+}
+
+.auth-container.quizzes-container h3 {
+    margin: 50px 0 20px;
+    font-size: 1.6rem;
+    text-align: left;
+    color: #fbaf04;
+}
+
+/* Tables wrapper spacing */
+.table {
+    width: 100%;
+    margin: 20px 0 50px;
+    border-collapse: collapse;
+}
+
+/* Improve readability of rows */
+.table td,
+.table th {
+    padding: 14px 18px;
+    text-align: left;
+    font-size: 1rem;
+}
+
+.table thead {
+    background-color: rgba(251, 175, 4, 0.08);
+}
+
+/* Make the quiz title link stand out */
+.table a {
+    font-weight: 600;
+    transition: color 0.2s ease;
+}
+
+.table a:hover {
+    color: #fff;
+}
+
+/* Button styling inside table */
+.tdbtn a.btn {
+    background: #fbaf04;
+    color: #030617;
+    padding: 6px 15px;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
+.tdbtn a.btn:hover {
+    background: #fff;
+    color: #030617;
+    transform: scale(1.05);
+}
+
+/* Make the layout cleaner for smaller screens */
+@media (max-width: 768px) {
+    .auth-container.quizzes-container {
+        width: 95%;
+        padding: 25px 15px;
+    }
+
+    .table,
+    .table th,
+    .table td {
+        font-size: 14px;
+        padding: 10px;
+    }
+
+    h1,
+    h3 {
+        text-align: center;
+    }
+}
+
+@media (max-width: 992px) {
+    .auth-container {
+        width: 90%;
+        min-width: auto;
+        /* Remove min-width constraint on smaller screens */
+        padding: 40px 25px;
+        box-shadow: 0 0 15px rgba(255, 255, 255, 0.08);
+    }
+
+    .auth-right {
+        min-width: 100%;
+        padding: 30px 20px;
+    }
+
+    .auth-container h1,
+    .auth-container h2 {
+        font-size: 1.8rem;
+        text-align: center;
+    }
+
+    .auth-container p {
+        font-size: 1rem;
+        text-align: center;
+    }
+
+    .table {
+        font-size: 0.9rem;
+        overflow-x: auto;
+        display: block;
+    }
+}
+
+/* Smaller phones (like iPhone SE or older Androids) */
+@media (max-width: 600px) {
+    .auth-container {
+        width: 95%;
+        padding: 25px 15px;
+    }
+
+    .auth-container h1 {
+        font-size: 1.5rem;
+    }
+
+    .auth-container h3 {
+        font-size: 1.2rem;
+    }
+
+    .auth-container table {
+        font-size: 0.85rem;
+    }
+
+    .btn,
+    button,
+    input[type="submit"] {
+        width: 100%;
+        font-size: 0.95rem;
+        padding: 10px 14px;
+    }
+
+    .content-flex {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .table th,
+    .table td {
+        padding: 8px;
+        text-align: left;
+    }
 }

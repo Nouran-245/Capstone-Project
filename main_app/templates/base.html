@@ -1,61 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     {% load static %}
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link href="https://fonts.googleapis.com/css2?family=Markazi+Text:wght@400..700&family=Pacifico&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Markazi+Text:wght@400..700&family=Pacifico&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="{% static 'css/base.css' %}" />
     {% block css %}
-    {%endblock%}
-    <link rel="stylesheet" href="{% static 'css/fontsize.css' %}" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />    <link rel="icon" type="image/png" href="{% static 'image/logoicon.png' %}" />
-    <title>{% block title %}QuizVerse{% endblock %}</title>
-</head>
-<body class="{% block body_class %}{% endblock %}">
 
-<header class="hero-header">
-        {% block hero %}
-        {% endblock %}
-</header>
-
-
-{% if request.resolver_match.url_name != 'login' and request.resolver_match.url_name != 'signup' %}
-<nav id="main-navbar" class="transparent-nav">
-  <ul>
-    {% if user.is_authenticated %}
-      <li>
-        <a href="{% url 'profile' user.username %}">{{ user.username }}</a>
-      </li>
-      <li><a href="{% url 'main' %}">Main</a></li>
-      <li><a href="{% url 'homepage' %}"> MyHome</a></li>
-      <li><a href="{% url 'quiz_list' %}">Add Quizzes</a></li>
-      <form method="post" action="{% url 'logout' %}">
-        {% csrf_token %}
-        <button type="submit">Logout</button>
-      </form>
-    {% else %}
-      {% if url != 'signup' and url != 'login' and url != 'main' %}
-        <li><a href="{% url 'signup' %}">Sign Up</a></li>
-        <li><a href="{% url 'login' %}">Sign In</a></li>
-      {% endif %}
-    {% endif %}
-  </ul>
-</nav>
-
-{% endif %}
-    <main>
-    {% block content %}
     {% endblock %}
-<footer>
-        {% block footer %}
+    <link rel="stylesheet" href="{% static 'css/fontsize.css' %}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" /> <link rel="icon" type="image/png" href="{% static 'image/logoicon.png' %}" />
+    <title>
+      {% block title %}
+        QuizVerse
+      {% endblock %}
+    </title>
+  </head>
+  <body class="{% block body_class %}
 
-    <div class="footer-bottom">
+    {% endblock %}">
+    <header class="hero-header">
+      {% block hero %}
+
+      {% endblock %}
+    </header>
+
+    {% if request.resolver_match.url_name != 'login' and request.resolver_match.url_name != 'signup' %}
+      <nav id="main-navbar" class="transparent-nav">
+        <ul>
+          {% if user.is_authenticated %}
+            <li>
+              <a href="{% url 'profile' user.username %}">{{ user.username }}</a>
+            </li>
+            <li>
+              <a href="{% url 'main' %}">Main</a>
+            </li>
+            <li>
+              <a href="{% url 'homepage' %}">MyHome</a>
+            </li>
+            {% if profile.user_type == 'teacher' %}
+              <li>
+                <a href="{% url 'quiz_list' %}">Add Quizzes</a>
+              </li>
+            {% endif %}
+            <form method="post" action="{% url 'logout' %}">
+              {% csrf_token %}
+              <button type="submit">Logout</button>
+            </form>
+          {% else %}
+            {% if url != 'signup' and url != 'login' and url != 'main' %}
+              <li>
+                <a href="{% url 'signup' %}">Sign Up</a>
+              </li>
+              <li>
+                <a href="{% url 'login' %}">Sign In</a>
+              </li>
+            {% endif %}
+          {% endif %}
+        </ul>
+      </nav>
+    {% endif %}
+    <main>
+      {% block content %}
+
+      {% endblock %}
+    </main>
+    <footer>
+      {% block footer %}
+
+      {% endblock %}
+      <div class="footer-bottom">
         <p>&copy; 2025 QuizVerse. All rights reserved.</p>
-    </div>
-        {% endblock %}
-</footer>
+      </div>
+    </footer>
 
-<script src="{% static 'js/base.js' %}"></script>
-</body>
+    <script src="{% static 'js/base.js' %}"></script>
+  </body>
 </html>

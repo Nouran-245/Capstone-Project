@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block css %}
+  <link rel="stylesheet" href="{% static 'css/other.css' %}" />
+{% endblock %}
+{% block content %}
+  <div class="auth-container quizzes-container">
+    <h1>{{ quiz.title }}</h1>
+    <p>{{ quiz.description }}</p>
+    <p>
+      <strong>Created At:</strong> {{ quiz.created_at|date:'Y-m-d H:i' }}
+    </p>
+{% comment %} action="{%score%}" {% endcomment %}
+    <form method="POST" >
+      {% csrf_token %}
+      {% for question in questions %}
+        <div class="question-block" style="margin-bottom: 30px;">
+          <h3>Q{{ forloop.counter }}: {{ question.text }}</h3>
+          <ul style="list-style-type: none; padding-left: 0;">
+            {% for choice in choices %}
+              {% if choice.question.id == question.id %}
+                <li style="margin-bottom: 10px;">
+                  <label>
+                    <input type="radio" name="question_{{ question.id }}" value="{{ choice.id }}" />
+                    {{ choice.text }}
+                  </label>
+                </li>
+              {% endif %}
+            {% endfor %}
+          </ul>
+        </div>
+      {% endfor %}
+
+      <button type="submit" class="btn">Submit Quiz</button>
+    </form>
+  </div>
+{% endblock %}
