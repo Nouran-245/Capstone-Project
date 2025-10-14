@@ -117,7 +117,9 @@ def QuizDeleteView(request, quiz_id):
         return redirect("quiz_list")
     return render(request, "main_app/quiz_confirm_delete.html", {"quiz": quiz})
 
-    # Question Create View
+
+# Question CRUD views
+    # Question List View
 
 
 class QuestionListView(LoginRequiredMixin, ListView):
@@ -175,4 +177,20 @@ def QuestionDeleteView(request, quiz_id, question_id):
     quiz = question.quiz
     return render(request, "main_app/question_confirm_delete.html", {"question": question, "quiz": quiz})
 
+# Choice CRUD views
+class ChoiceListView(LoginRequiredMixin, ListView):
+    model = Choice
+    template_name = "main_app/Choice.html"
+    context_object_name = "choices"
+# as i read here i need only the parent id not all family id :)
+    def get_queryset(self):
+        question_id = self.kwargs["question_id"]
+        return Choice.objects.filter(question_id=question_id)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["question"] = Question.objects.get(id=self.kwargs["question_id"])
+        context["quiz"] = context["question"].quiz  # grandparent
+        context["form"] = ChoiceForm()
+        return context
 

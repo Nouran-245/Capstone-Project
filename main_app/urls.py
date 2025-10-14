@@ -1,8 +1,23 @@
 from django.urls import path
 from . import views
 from django.contrib.auth.views import LogoutView
-from .views import CustomLoginView, QuizListView, QuizCreateView, QuizUpdateView, QuizDeleteView, QuestionListView, QuestionCreateView, QuestionUpdateView, QuestionDeleteView, profile_view
 from django.contrib.auth.decorators import login_required
+from .views import (
+    CustomLoginView,
+    QuizListView,
+    QuizCreateView,
+    QuizUpdateView,
+    QuizDeleteView,
+    QuestionListView,
+    QuestionCreateView,
+    QuestionUpdateView,
+    QuestionDeleteView,
+    ChoiceListView,
+    # ChoiceCreateView,
+    # ChoiceUpdateView,
+    # ChoiceDeleteView,
+    profile_view,
+)    
 
 urlpatterns = [
     # Normal views
@@ -28,7 +43,7 @@ urlpatterns = [
     path('quizzes/<int:quiz_id>/questions/<int:question_id>/delete/', views.QuestionDeleteView, name='question_confirm_delete'),
 
     # Choice Crud views
+    path('quizzes/<int:quiz_id>/questions/<int:question_id>/choices/', ChoiceListView.as_view(), name='choice_list'),
     
-
 ]   
 

@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block title %}
-  Questions - QuizVerse
+  Choices - QuizVerse
 {% endblock %}
 
 {% block hero %}
@@ -15,18 +15,15 @@
 
 {% block content %}
   <div class="auth-container quizzes-container">
-    <h2 class="question-h2">Questions for "{{ quiz.title }}"</h2>
-
+    <h2 class="question-h2">Choices for "{{ quiz.title }}"</h2>
     <div class="quiz-section">
       <div class="quiz-list">
         {% for question in questions %}
           <div class="quiz-item">
-            <div class="quiz-title">
-              <a href="{% url 'choice_list' quiz.id question.id %}" class="quiz-link">{{ question.text }}</a>
-            </div>
+            <div class="quiz-title">{{ choice.text }}</div>
             <div class="quiz-cruds">
-              <a href="{% url 'question_update' quiz.id question.id %}"><i class="fa-solid fa-pen-to-square"></i></a>
-              <a href="{% url 'question_confirm_delete' quiz.id question.id %}"><i class="fa-solid fa-trash"></i></a>
+              {% comment %} <a href="{% url 'question_update' quiz.id question.id %}"><i class="fa-solid fa-pen-to-square"></i></a>
+              <a href="{% url 'question_confirm_delete' quiz.id question.id %}"><i class="fa-solid fa-trash"></i></a> {% endcomment %}
             </div>
           </div>
         {% empty %}
@@ -36,13 +33,16 @@
     </div>
 
     <div class="question-form">
-      {% if not question %}
-        <h3>Add a Question</h3>
-        <form method="POST" action="{% url 'question_add' quiz.id %}">
+      {% comment %} {% if not Choice %}
+        {% endcomment %}
+        <h3>Add The Choice</h3>
+        {% comment %}action="{% url 'question_add' quiz.id %}"{% endcomment %}
+        <form method="POST">
           {% csrf_token %}
           {{ form.as_p }}
-          <button type="submit" class="btn">Add Question</button>
+          <button type="submit" class="btn">Add Choice</button>
         </form>
+        {% comment %}
       {% else %}
         <h3>Update Question</h3>
         <form method="POST" action="{% url 'question_update' form.instance.quiz.id form.instance.id %}">
@@ -50,9 +50,9 @@
           {{ form.as_p }}
           <button type="submit" class="btn">Update Question</button>
         </form>
-      {% endif %}
+      {% endif %} {% endcomment %}
     </div>
 
-    <a href="{% url 'quiz_list' %}" class="back-link">Back to Quizzes</a>
+    <a href="{% url 'quiz_list' %}" class="back-link">Back to Questions</a>
   </div>
 {% endblock %}
