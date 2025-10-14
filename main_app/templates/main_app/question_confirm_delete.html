@@ -6,9 +6,9 @@
 {% block content %}
   <h2>Confirm Deletion</h2>
   <p>Are you sure you want to delete "{{ object }}"?</p>
-  <form class="delete-form" method="post" action="{% url 'quiz_confirm_delete' quiz.id %}">
+  <form class="delete-form" method="post" action="{% url 'question_confirm_delete' quiz.id question.id %}">
     {% csrf_token %}
     <button type="submit">Yes, delete</button>
-    <a href="{% url 'quiz_list' %}">Cancel</a>
+    <a href="{% url 'question_list' %}">Cancel</a>
   </form>
 {% endblock %}

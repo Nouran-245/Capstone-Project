@@ -11,7 +11,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from .models import Quiz, Question, Choice, StudentAnswer, Result, Profile
 from .forms import QuizForm, QuestionForm, ChoiceForm
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy,reverse
 from .forms import SignUpForm
 
 
@@ -67,6 +67,7 @@ class QuizListView(ListView):
         context = super().get_context_data(**kwargs)
         context['form'] = QuizForm()
         return context
+
     # Quiz Create View
 
 
@@ -79,7 +80,6 @@ class QuizCreateView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super().form_valid(form)
-    # Quiz Create view
 
 
 @login_required
@@ -94,6 +94,7 @@ def add_quiz(request, quiz_id):
     else:
         form = QuizForm()
     return render(request, 'main_app/question_list.html', {'form': form})
+
     # Quiz Update View
 
 
@@ -104,6 +105,7 @@ class QuizUpdateView(LoginRequiredMixin, UpdateView):
     pk_url_kwarg = 'quiz_id'
     redirect_field_name = 'quiz_list'
     success_url = '/quizzes/'
+
     # Quiz Delete View
 
 
@@ -118,7 +120,7 @@ def QuizDeleteView(request, quiz_id):
 
 #
 #
-# 
+#
 #
 #
 #
@@ -133,7 +135,7 @@ def QuizDeleteView(request, quiz_id):
 
 class QuestionListView(LoginRequiredMixin, ListView):
     model = Question
-    template_name = "mainquestion_list.html"
+    template_name = "main_app/question_list.html"
     context_object_name = "questions"
 
     def get_queryset(self):
@@ -150,7 +152,7 @@ class QuestionListView(LoginRequiredMixin, ListView):
 class QuestionCreateView(LoginRequiredMixin, CreateView):
     model = Question
     form_class = QuestionForm
-    template_name = "question_form.html"
+    template_name = "main_app/question_list.html"
 
     def form_valid(self, form):
         quiz = Quiz.objects.get(id=self.kwargs["quiz_id"])
@@ -158,24 +160,45 @@ class QuestionCreateView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
     def get_success_url(self):
-        return reversed("question-list", kwargs={"quiz_id": self.kwargs["quiz_id"]})
+        return reverse("question_list", kwargs={"quiz_id": self.kwargs["quiz_id"]})
+    
+# @login_required
+# def add_question(request, quiz_id):
+#     if request.method == 'POST':
+#         form = QuestionForm(request.POST)
+#         if form.is_valid():
+#             new_question = form.save(commit=False)
+#             new_question.quiz = request.quiz
+#             new_question.save()
+#             return redirect('question_list')
+    # else:
+    #     form = QuizForm()
+    # return render(request, 'main_app/question_list.html', {'form': form})
+
 
 
 class QuestionUpdateView(LoginRequiredMixin, UpdateView):
     model = Question
     form_class = QuestionForm
-    template_name = "question_form.html"
+    template_name = "question_list.html"
 
     def get_success_url(self):
-        return reversed("question-list", kwargs={"quiz_id": self.object.quiz.id})
+        return reverse("question_list", kwargs={"quiz_id": self.object.quiz.id})
+
+def QuestionDeleteView(request, quiz_id, question_id):
+    question = get_object_or_404(Question, id=question_id, quiz_id=quiz_id)
+    if request.method == "POST":
+        question.delete()
+        return redirect("question_list", quiz_id=quiz_id)
+    return render(request, "main_app/question_confirm_delete.html", {"question": question})
 
 
-class QuestionDeleteView(LoginRequiredMixin, DeleteView):
-    model = Question
-    template_name = "question_confirm_delete.html"
+# class QuestionDeleteView(LoginRequiredMixin, DeleteView):
+#     model = Question
+#     template_name = "main_app/question_confirm_delete.html"
 
-    def get_success_url(self):
-        return reversed("question-list", kwargs={"quiz_id": self.object.quiz.id})
+#     def get_success_url(self):
+#         return reversed("question_list", kwargs={"question_id": self.object.question.id})
 
 
 @login_required

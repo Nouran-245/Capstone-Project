@@ -84,6 +84,33 @@ p label {
     background: rgba(255, 255, 255, 0.9);
 }
 
+.delete-form a {
+    text-decoration: none;
+    font-size: 25px;
+    color: white;
+    background: orange;
+    text-align: center;
+    border-radius: 5px;
+    padding: 5px 10px;
+    gap: 10px;
+    margin: 10px;
+
+}
+
+main .delete-form {
+    display: flex;
+    flex-direction: row !important;
+}
+
+main .delete-form button {
+    background: #fff;
+    color: #11182d;
+    border-radius: 5px;
+    padding: 5px 10px;
+    gap: 10px;
+    margin: 10px;
+}
+
 .auth-container button {
     background: #fbaf04;
     color: #2c2c54;
@@ -108,7 +135,7 @@ p label {
 }
 
 .auth-container a {
-    color: #555;
+    color: #555 !important;
     text-decoration: none;
     font-size: 23px !important;
 }
@@ -138,6 +165,7 @@ p label {
 }
 
 .quiz-title {
+    color:#333;
     font-weight: bold;
     text-align: left;
     flex: 1;
@@ -157,7 +185,7 @@ p label {
 }
 
 .quiz-cruds a:hover {
-    color: #000;
+    color: #11182d;
 }
 
 .quiz-section {
@@ -192,4 +220,8 @@ p label {
 
 textarea#id_description {
     border-radius: 10px;
+}
+
+.question-h2{
+    font-size: 25px !important;
 }

@@ -1,43 +1,59 @@
-{% extends 'base.html' %} {% load static %} {% block css %}
-  <link rel="stylesheet" href="{% static 'css/other.css' %}" />
-{% endblock %} {% block title %}
-  Questions - QuizVerse
-{% endblock %} {% block hero %}
+{% extends 'base.html' %}
+{% load static %}
 
-{% endblock %} {% block content %}
-  <div class="auth-container">
-    <h2>Questions for "{{ quiz.title }}"</h2> <ul class="quiz-list">
-      {% for question in questions %}
-        <li class="quiz-item">
-          <strong>{{ question.text }}</strong> <ul>
-            {% for choice in question.choices.all %}
-              <li>
-                {{ choice.text }} {% if choice.is_correct %}
-                  <span style="color:#f8d36a;">(Correct)</span>
-                {% endif %}
-              </li>
-            {% endfor %}
-          </ul>
-        </li>
-      {% empty %}
-        <li>No questions yet.</li>
-      {% endfor %}
-    </ul> <div class="quiz-form">
-      <h3>Add a Question</h3> <form method="POST">
-        {% csrf_token %} {{ form.text.label_tag }}<br /> {{ form.text }} <br /><br /> <label for="question_type">Question Type:</label> <select name="question_type" id="question_type">
-          <option value="MC">Multiple Choice (Single Answer)</option> <option value="MultiAnswer">Multiple Answers</option>
-        </select> <div id="choices-container">
-          <h4>Choices:</h4> <div>
-            <input type="text" name="choice_1" placeholder="Choice 1" /> <label><input type="checkbox" name="correct_1" />Correct</label>
-          </div> <div>
-            <input type="text" name="choice_2" placeholder="Choice 2" /> <label><input type="checkbox" name="correct_2" />Correct</label>
-          </div> <div>
-            <input type="text" name="choice_3" placeholder="Choice 3" /> <label><input type="checkbox" name="correct_3" />Correct</label>
-          </div> <div>
-            <input type="text" name="choice_4" placeholder="Choice 4" /> <label><input type="checkbox" name="correct_4" />Correct</label>
+{% block css %}
+  <link rel="stylesheet" href="{% static 'css/other.css' %}" />
+{% endblock %}
+
+{% block title %}
+  Questions - QuizVerse
+{% endblock %}
+
+{% block hero %}
+
+{% endblock %}
+
+{% block content %}
+  <div class="auth-container quizzes-container">
+    <h2 class="question-h2">Questions for "{{ quiz.title }}"</h2>
+
+    <div class="quiz-section">
+      <div class="quiz-list">
+        {% for question in questions %}
+          <div class="quiz-item">
+            <div class="quiz-title">
+              {{ question.text }}
+              {% comment %} <a href="{% url 'answer_list' question.id %}" class="quiz-link"></a> {% endcomment %}
+            </div>
+            <div class="quiz-cruds">
+              <a href="{% url 'question_update' quiz.id question.id %}"><i class="fa-solid fa-pen-to-square"></i></a>
+              <a href="{% url 'question_confirm_delete' quiz.id question.id %}"><i class="fa-solid fa-trash"></i></a>
+            </div>
           </div>
-        </div> <button type="submit" class="btn">Add Question</button>
-      </form>
-    </div> <a href="{% url 'quiz_list' %}">Back to Quizzes</a>
+        {% empty %}
+          <div>No questions yet.</div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="question-form">
+      {% if not question %}
+        <h3>Add a Question</h3>
+        <form method="POST" action="{% url 'question_add' quiz.id %}">
+          {% csrf_token %}
+          {{ form.as_p }}
+          <button type="submit" class="btn">Add Question</button>
+        </form>
+      {% else %}
+        <h3>Update Question</h3>
+        <form method="POST" action="{% url 'question_update' quiz.id question.id %}">
+          {% csrf_token %}
+          {{ form.as_p }}
+          <button type="submit" class="btn">Update Question</button>
+        </form>
+      {% endif %}
+    </div>
+
+    <a href="{% url 'quiz_list' %}" class="back-link">Back to Quizzes</a>
   </div>
 {% endblock %}
