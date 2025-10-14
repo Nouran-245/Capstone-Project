@@ -117,20 +117,7 @@ def QuizDeleteView(request, quiz_id):
         return redirect("quiz_list")
     return render(request, "main_app/quiz_confirm_delete.html", {"quiz": quiz})
 
-
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
+    # Question Create View
 
 
 class QuestionListView(LoginRequiredMixin, ListView):
@@ -148,6 +135,8 @@ class QuestionListView(LoginRequiredMixin, ListView):
         context["form"] = QuestionForm()
         return context
 
+    # Question Create view
+
 
 class QuestionCreateView(LoginRequiredMixin, CreateView):
     model = Question
@@ -162,18 +151,7 @@ class QuestionCreateView(LoginRequiredMixin, CreateView):
     def get_success_url(self):
         return reverse("question_list", kwargs={"quiz_id": self.kwargs["quiz_id"]})
 
-# @login_required
-# def add_question(request, quiz_id):
-#     if request.method == 'POST':
-#         form = QuestionForm(request.POST)
-#         if form.is_valid():
-#             new_question = form.save(commit=False)
-#             new_question.quiz = request.quiz
-#             new_question.save()
-#             return redirect('question_list')
-    # else:
-    #     form = QuizForm()
-    # return render(request, 'main_app/question_list.html', {'form': form})
+    # Question Update view
 
 
 class QuestionUpdateView(LoginRequiredMixin, UpdateView):
@@ -182,8 +160,12 @@ class QuestionUpdateView(LoginRequiredMixin, UpdateView):
     template_name = 'main_app/question_list.html'
     pk_url_kwarg = 'question_id'
     redirect_field_name = 'question_list'
+
     def get_success_url(self):
         return reverse("question_list", kwargs={"quiz_id": self.kwargs["quiz_id"]})
+
+    # Question Delete view
+
 
 def QuestionDeleteView(request, quiz_id, question_id):
     question = get_object_or_404(Question, id=question_id, quiz_id=quiz_id)
@@ -194,32 +176,3 @@ def QuestionDeleteView(request, quiz_id, question_id):
     return render(request, "main_app/question_confirm_delete.html", {"question": question, "quiz": quiz})
 
 
-@login_required
-def take_quiz(request, quiz_id):
-    quiz = get_object_or_404(Quiz, id=quiz_id)
-    questions = quiz.questions.all()
-
-    if request.method == "POST":
-        score = 0
-        for question in questions:
-            selected_ids = request.POST.getlist(f"question_{question.id}")
-            selected_choices = Choice.objects.filter(id__in=selected_ids)
-
-            correct_ids = question.choices.filter(
-                is_correct=True).values_list('id', flat=True)
-            is_correct = set(map(int, selected_ids)) == set(correct_ids)
-
-            student_answer = StudentAnswer.objects.create(
-                user=request.user,
-                question=question,
-                is_correct=is_correct
-            )
-            student_answer.selected_choices.set(selected_choices)
-
-            if is_correct:
-                score += 1
-
-        Result.objects.create(user=request.user, quiz=quiz, score=score)
-        return redirect("quiz_list")
-
-    return render(request, "take_quiz.html", {"quiz": quiz, "questions": questions})
