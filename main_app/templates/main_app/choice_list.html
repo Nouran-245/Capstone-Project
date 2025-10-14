@@ -15,42 +15,39 @@
 
 {% block content %}
   <div class="auth-container quizzes-container">
-    <h2 class="question-h2">Choices for "{{ quiz.title }}"</h2>
+    <h2 class="question-h2">Choices for "{{ question.text }}"</h2>
     <div class="quiz-section">
       <div class="quiz-list">
-        {% for question in questions %}
+        {% for choice in choices %}
           <div class="quiz-item">
-            <div class="quiz-title">{{ choice.text }}</div>
+            <div class="quiz-title">{{ choice.text }} - {{ choice.is_correct }}</div>
             <div class="quiz-cruds">
-              {% comment %} <a href="{% url 'question_update' quiz.id question.id %}"><i class="fa-solid fa-pen-to-square"></i></a>
-              <a href="{% url 'question_confirm_delete' quiz.id question.id %}"><i class="fa-solid fa-trash"></i></a> {% endcomment %}
+              <a href="{% url 'choice_update' quiz.id question.id choice.id %}"><i class="fa-solid fa-pen-to-square"></i></a>
+              <a href="{% url 'choice_confirm_delete' quiz.id question.id choice.id %}"><i class="fa-solid fa-trash"></i></a>
             </div>
           </div>
         {% empty %}
-          <div>No questions yet.</div>
+          <div>No Choice yet.</div>
         {% endfor %}
       </div>
     </div>
 
     <div class="question-form">
-      {% comment %} {% if not Choice %}
-        {% endcomment %}
+      {% if not choice %}
         <h3>Add The Choice</h3>
-        {% comment %}action="{% url 'question_add' quiz.id %}"{% endcomment %}
-        <form method="POST">
+        <form method="POST" action="{% url 'choice_add' quiz.id question.id %}">
           {% csrf_token %}
           {{ form.as_p }}
           <button type="submit" class="btn">Add Choice</button>
         </form>
-        {% comment %}
       {% else %}
-        <h3>Update Question</h3>
-        <form method="POST" action="{% url 'question_update' form.instance.quiz.id form.instance.id %}">
+        <h3>Update Choice</h3>
+        <form method="POST" action="{% url 'choice_update' form.instance.question.quiz.id form.instance.question.id form.instance.id %}">
           {% csrf_token %}
           {{ form.as_p }}
-          <button type="submit" class="btn">Update Question</button>
+          <button type="submit" class="btn">Update Choice</button>
         </form>
-      {% endif %} {% endcomment %}
+      {% endif %}
     </div>
 
     <a href="{% url 'quiz_list' %}" class="back-link">Back to Questions</a>

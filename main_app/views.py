@@ -182,7 +182,7 @@ class ChoiceListView(LoginRequiredMixin, ListView):
     model = Choice
     template_name = "main_app/Choice.html"
     context_object_name = "choices"
-# as i read here i need only the parent id not all family id :)
+    # as i read here i need only the parent id not all family id :)
     def get_queryset(self):
         question_id = self.kwargs["question_id"]
         return Choice.objects.filter(question_id=question_id)
@@ -193,4 +193,38 @@ class ChoiceListView(LoginRequiredMixin, ListView):
         context["quiz"] = context["question"].quiz  # grandparent
         context["form"] = ChoiceForm()
         return context
+
+class ChoiceCreateView(LoginRequiredMixin, CreateView):
+    model = Choice
+    form_class = ChoiceForm
+    template_name = "main_app/choice_list.html"
+
+    def form_valid(self, form):
+        question = Question.objects.get(id=self.kwargs["question_id"])
+        form.instance.question = question
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse("choice_list", kwargs={"quiz_id": self.kwargs["quiz_id"],"question_id": self.kwargs["question_id"]})
+    
+
+class ChoiceUpdateView(LoginRequiredMixin, UpdateView):
+    model = Choice
+    fields = ['text' ,'is_correct']
+    template_name = 'main_app/choice_list.html'
+    pk_url_kwarg = 'choice_id'
+    redirect_field_name = 'choice_list'
+
+    def get_success_url(self):
+        return reverse("choice_list", kwargs={"quiz_id": self.kwargs["quiz_id"],"question_id": self.kwargs["question_id"]})
+
+    # Choice Delete view
+def ChoiceDeleteView(request, quiz_id, question_id ,choice_id):
+    choice = get_object_or_404(Choice, question__id=question_id, id=choice_id)
+    if request.method == "POST":
+        choice.delete()
+        return redirect("choice_list",quiz_id=quiz_id ,question_id=question_id)
+    quiz = choice.question.quiz
+    question = choice.question
+    return render(request, "main_app/choice_confirm_delete.html", {"choice":choice,"question": question, "quiz": quiz})
 

@@ -13,9 +13,9 @@ from .views import (
     QuestionUpdateView,
     QuestionDeleteView,
     ChoiceListView,
-    # ChoiceCreateView,
-    # ChoiceUpdateView,
-    # ChoiceDeleteView,
+    ChoiceCreateView,
+    ChoiceUpdateView,
+    ChoiceDeleteView,
     profile_view,
 )    
 
@@ -44,6 +44,9 @@ urlpatterns = [
 
     # Choice Crud views
     path('quizzes/<int:quiz_id>/questions/<int:question_id>/choices/', ChoiceListView.as_view(), name='choice_list'),
-    
+    path('quizzes/<int:quiz_id>/questions/<int:question_id>/choices/add/', ChoiceCreateView.as_view(), name='choice_add'),
+    path('quizzes/<int:quiz_id>/questions/<int:question_id>/choices/<int:choice_id>/update/', ChoiceUpdateView.as_view(), name='choice_update'),
+    path('quizzes/<int:quiz_id>/questions/<int:question_id>/choices/<int:choice_id>/delete/', views.ChoiceDeleteView, name='choice_confirm_delete'),
+
 ]   
 
