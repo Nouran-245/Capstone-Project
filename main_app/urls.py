@@ -21,7 +21,8 @@ from .views import (
 
 urlpatterns = [
     # Normal views
-    path('', views.home, name='home'),
+    path('', views.main, name='main'),
+    path('homepage/', views.homepage, name='homepage'),
     path('quizzes/', QuizListView.as_view(), name='quiz_list'),
     path('profile/<str:username>/', views.profile_view, name='profile'),
 

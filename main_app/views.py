@@ -16,9 +16,12 @@ from .forms import SignUpForm
 
 
 # normal views
-def home(request):
-    return render(request, "home.html")
+def main(request):
+    return render(request, "main.html")
 
+@login_required
+def homepage(request):
+    return render(request, "homepage.html")
 
 @login_required
 def profile_view(request, username):

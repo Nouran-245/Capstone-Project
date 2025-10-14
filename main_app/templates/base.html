@@ -27,7 +27,8 @@
       <li>
         <a href="{% url 'profile' user.username %}">{{ user.username }}</a>
       </li>
-      <li><a href="{% url 'home' %}">Main</a></li>
+      <li><a href="{% url 'main' %}">Main</a></li>
+      <li><a href="{% url 'homepage' %}"> MyHome</a></li>
       <li><a href="{% url 'quiz_list' %}">Add Quizzes</a></li>
       <form method="post" action="{% url 'logout' %}">
         {% csrf_token %}
