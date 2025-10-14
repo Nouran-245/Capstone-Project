@@ -9,6 +9,6 @@
   <form class="delete-form" method="post" action="{% url 'question_confirm_delete' quiz.id question.id %}">
     {% csrf_token %}
     <button type="submit">Yes, delete</button>
-    <a href="{% url 'question_list' %}">Cancel</a>
+    <a href="{% url 'question_list' quiz.id %}">Cancel</a>
   </form>
 {% endblock %}

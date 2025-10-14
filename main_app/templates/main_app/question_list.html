@@ -46,7 +46,7 @@
         </form>
       {% else %}
         <h3>Update Question</h3>
-        <form method="POST" action="{% url 'question_update' quiz.id question.id %}">
+        <form method="POST" action="{% url 'question_update' form.instance.quiz.id form.instance.id %}">
           {% csrf_token %}
           {{ form.as_p }}
           <button type="submit" class="btn">Update Question</button>

@@ -11,7 +11,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from .models import Quiz, Question, Choice, StudentAnswer, Result, Profile
 from .forms import QuizForm, QuestionForm, ChoiceForm
-from django.urls import reverse_lazy,reverse
+from django.urls import reverse_lazy, reverse
 from .forms import SignUpForm
 
 
@@ -161,7 +161,7 @@ class QuestionCreateView(LoginRequiredMixin, CreateView):
 
     def get_success_url(self):
         return reverse("question_list", kwargs={"quiz_id": self.kwargs["quiz_id"]})
-    
+
 # @login_required
 # def add_question(request, quiz_id):
 #     if request.method == 'POST':
@@ -176,29 +176,22 @@ class QuestionCreateView(LoginRequiredMixin, CreateView):
     # return render(request, 'main_app/question_list.html', {'form': form})
 
 
-
 class QuestionUpdateView(LoginRequiredMixin, UpdateView):
     model = Question
-    form_class = QuestionForm
-    template_name = "question_list.html"
-
+    fields = ['text']
+    template_name = 'main_app/question_list.html'
+    pk_url_kwarg = 'question_id'
+    redirect_field_name = 'question_list'
     def get_success_url(self):
-        return reverse("question_list", kwargs={"quiz_id": self.object.quiz.id})
+        return reverse("question_list", kwargs={"quiz_id": self.kwargs["quiz_id"]})
 
 def QuestionDeleteView(request, quiz_id, question_id):
     question = get_object_or_404(Question, id=question_id, quiz_id=quiz_id)
     if request.method == "POST":
         question.delete()
         return redirect("question_list", quiz_id=quiz_id)
-    return render(request, "main_app/question_confirm_delete.html", {"question": question})
-
-
-# class QuestionDeleteView(LoginRequiredMixin, DeleteView):
-#     model = Question
-#     template_name = "main_app/question_confirm_delete.html"
-
-#     def get_success_url(self):
-#         return reversed("question_list", kwargs={"question_id": self.object.question.id})
+    quiz = question.quiz
+    return render(request, "main_app/question_confirm_delete.html", {"question": question, "quiz": quiz})
 
 
 @login_required
