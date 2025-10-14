@@ -25,9 +25,11 @@ main {
     padding: 40px;
     color: #fbaf04;
 }
-footer{
-    min-width: 500px;;
+
+footer {
+    min-width: 500px;
 }
+
 
 .container {
     width: 80%;

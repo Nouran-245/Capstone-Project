@@ -31,9 +31,24 @@ def homepage(request):
     else:
         quizzes = []
 
-    return render(request, "homepage.html", {
-        'profile': profile,
-        'quizzes': quizzes, })
+    question_counts = {}
+    for quiz in quizzes:
+        question_counts[quiz.id] = quiz.questions.count()
+    results = Result.objects.filter(user=request.user)
+    result_question_counts = {result.id: result.quiz.questions.count() for result in results}
+
+    return render(
+        request,
+        "homepage.html",
+        {
+            "profile": profile,
+            "quizzes": quizzes,
+            "results": results,
+            "question_counts": question_counts,
+        },
+    )
+
+
 
 def attempt_quiz(request, quiz_id):
     profile = Profile.objects.get(user=request.user)
@@ -47,6 +62,32 @@ def attempt_quiz(request, quiz_id):
         'questions': questions,
         'choices': choices
     })
+
+@login_required
+def take_quiz(request, quiz_id):
+    profile = Profile.objects.get(user=request.user)
+    quiz = get_object_or_404(Quiz, id=quiz_id)
+    questions = quiz.questions.all()
+    if request.method == "POST":
+        score = 0
+        for question in questions:
+            selected_id = request.POST.get(f"question_{question.id}")
+            correct_id = question.choices.filter(is_correct=True).values_list('id', flat=True).first()
+            is_correct = int(selected_id) == correct_id
+            user=request.user,
+            question=question,
+            is_correct=is_correct
+            if is_correct:
+                score += 1
+
+        Result.objects.create(user=request.user, quiz=quiz, score=score)
+        return redirect("homepage")
+
+    return render(request, "homepage.html", {'profile': profile,'quiz': quiz, 'questions': questions})
+
+
+
+
 
 @login_required
 def profile_view(request, username):

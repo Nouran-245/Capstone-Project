@@ -40,6 +40,16 @@ class Choice(models.Model):
         return f"{self.text} ({'Correct' if self.is_correct else 'Wrong'})"
 
 
+class Result(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='results')
+    quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE, related_name='results')
+    score = models.IntegerField()
+    taken_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.user.username} - {self.quiz.title} ({self.score})"
+
+
 class StudentAnswer(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='answers')
     question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name='student_answers')
@@ -49,13 +59,3 @@ class StudentAnswer(models.Model):
 
     def __str__(self):
         return f"{self.user.username} - {self.question.text}"
-
-
-class Result(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='results')
-    quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE, related_name='results')
-    score = models.IntegerField()
-    taken_at = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return f"{self.user.username} - {self.quiz.title} ({self.score})"

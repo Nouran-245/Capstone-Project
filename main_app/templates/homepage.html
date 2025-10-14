@@ -54,13 +54,11 @@
           {% for quiz in quizzes.all %}
             <tr>
               <td>{{ quiz.user.username }}</td>
-              <td>
-                <a href="{% url 'question_list' quiz.id %}">{{ quiz.title }}</a>
-              </td>
+              <td>{{ quiz.title }}</td>
               <td>{{ quiz.description }}</td>
               <td>{{ quiz.created_at|date:'Y-m-d H:i' }}</td>
               <td class="tdbtn">
-                <a href="{% url 'attempt_quiz' quiz.id%}" class="btn">Start Now</a>
+                <a href="{% url 'attempt_quiz' quiz.id %}" class="btn">Start Now</a>
               </td>
             </tr>
           {% endfor %}
@@ -87,7 +85,7 @@
                 <td>{{ result.quiz.title }}</td>
                 <td>{{ result.quiz.description }}</td>
                 <td>{{ result.score }}</td>
-                <td>{{ result.created_at|date:'Y-m-d H:i' }}</td>
+                <td>{{ result.taken_at|date:'Y-m-d H:i' }}</td>
               </tr>
             {% endfor %}
           </tbody>

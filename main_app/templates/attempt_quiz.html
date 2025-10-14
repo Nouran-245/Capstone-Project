@@ -10,8 +10,8 @@
     <p>
       <strong>Created At:</strong> {{ quiz.created_at|date:'Y-m-d H:i' }}
     </p>
-{% comment %} action="{%score%}" {% endcomment %}
-    <form method="POST" >
+{% comment %} action="{% url 'score' choice.is_correct question.id as i think%}" {% endcomment %}
+    <form method="POST" action="{% url 'take_quiz' quiz.id%}">
       {% csrf_token %}
       {% for question in questions %}
         <div class="question-block" style="margin-bottom: 30px;">

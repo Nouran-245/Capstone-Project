@@ -23,9 +23,10 @@ urlpatterns = [
     # Normal views
     path('', views.main, name='main'),
     path('homepage/', views.homepage, name='homepage'),
-    path('attempt/<int:quiz_id>/', views.attempt_quiz, name='attempt_quiz'),
     path('quizzes/', QuizListView.as_view(), name='quiz_list'),
+    path('attempt/<int:quiz_id>/', views.attempt_quiz, name='attempt_quiz'),
     path('profile/<str:username>/', views.profile_view, name='profile'),
+    path('submit/<int:quiz_id>/', views.take_quiz, name='take_quiz'),
 
     # Authentication views
     path('login/', CustomLoginView.as_view(), name='login'),
