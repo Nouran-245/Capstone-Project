@@ -179,40 +179,51 @@ Table Result {
 Follow these steps to set up and run the project locally:
 
 1. **Fork** this repository to your GitHub account.  
-2. **Clone** your forked repository to your local machine:
-   ```bash
-   git clone git@github.com:YOUR_USERNAME/capstone.git
-Navigate to the project directory:
+2. **Clone** your forked repository to your local machine by write this in your **Terminal**:
+  ```bash
+    git clone git@github.com:<YOUR_USERNAME>/Capstone_Project.git
+  ```
+3. Navigate to the project directory:
+  ```bash
+    cd capstone
+  ```
 
+4. Initialize a new virtual environment and install Django:
+  ```bash
+    pipenv install django
+  ```
 
-cd capstone
-Create and activate a virtual environment (recommended):
+5. Activate the virtual environment
+  ```bash
+    pipenv shell
+  ```
+6. Start a new Django project inside your current directory:
+  ```bash
+    django-admin startproject capstone .
+  ```
 
+6. Apply migrations to set up the database:
+  ```bash
+    python manage.py migrate
+  ```
 
-python -m venv venv
-source venv/Scripts/activate   # On Windows
-source venv/bin/activate       # On macOS/Linux
-Install project dependencies:
+7. Run the development server:
+  ```bash
+    python manage.py runserver
+  ```
 
+8. Open your browser and go to:
+  ```bash
+    http://127.0.0.1:8000/
+  ```
+ 9. ✅ To deactivate the virtual environment when you're done working:
+  ```bash
+    exit
+  ```
 
-pip install -r requirements.txt
-Apply migrations to set up the database:
-
-python manage.py migrate
-
-Run the development server:
-
-python manage.py runserver
-Open your browser and go to:
-
-http://127.0.0.1:8000/
 
 🎉 Now the project should be running locally!
 
-yaml
-Copy code
-
----
 ---
 
 ### 👨‍💻 Author
