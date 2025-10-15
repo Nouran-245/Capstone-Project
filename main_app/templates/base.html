@@ -31,6 +31,9 @@
         <ul>
           {% if user.is_authenticated %}
             <li>
+              <a href="{% url 'profile' user.username  %}"><img src="{{ user.profile.profile_image }}" alt="Profile" style="width:35px; height:35px; border-radius:50%; object-fit: cover;" /></a>
+            </li>
+            <li>
               <a href="{% url 'profile' user.username %}">{{ user.username }}</a>
             </li>
             <li>
@@ -39,7 +42,7 @@
             <li>
               <a href="{% url 'homepage' %}">MyHome</a>
             </li>
-            {% if profile.user_type == 'teacher' %}
+            {% if profile.user_type != 'student' %}
               <li>
                 <a href="{% url 'quiz_list' %}">Add Quizzes</a>
               </li>

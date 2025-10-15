@@ -43,3 +43,8 @@ class ChoiceForm(forms.ModelForm):
     class Meta:
         model = Choice
         fields = ['text', 'is_correct']
+
+class ProfileForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ['profile_image']

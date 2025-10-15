@@ -9,7 +9,7 @@ class Profile(models.Model):
     )
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     user_type = models.CharField(max_length=10, choices=USER_TYPES)
-
+    profile_image = models.URLField(max_length=500, blank=True, null=True)
     def __str__(self):
         return f"{self.user.username} ({self.user_type})"
 
@@ -32,7 +32,8 @@ class Question(models.Model):
 
 
 class Choice(models.Model):
-    question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name='choices')
+    question = models.ForeignKey(
+        Question, on_delete=models.CASCADE, related_name='choices')
     text = models.CharField(max_length=255)
     is_correct = models.BooleanField(default=False)
 
@@ -41,21 +42,12 @@ class Choice(models.Model):
 
 
 class Result(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='results')
-    quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE, related_name='results')
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name='results')
+    quiz = models.ForeignKey(
+        Quiz, on_delete=models.CASCADE, related_name='results')
     score = models.IntegerField()
     taken_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f"{self.user.username} - {self.quiz.title} ({self.score})"
-
-
-class StudentAnswer(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='answers')
-    question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name='student_answers')
-    selected_choices = models.ManyToManyField(Choice, blank=True)
-    text_answer = models.TextField(blank=True, null=True)
-    is_correct = models.BooleanField(default=False)
-
-    def __str__(self):
-        return f"{self.user.username} - {self.question.text}"

@@ -2,15 +2,28 @@
 {% load static %}
 
 {% block css %}
-<link rel="stylesheet" href="{% static 'css/other.css' %}" />
+  <link rel="stylesheet" href="{% static 'css/other.css' %}" />
 {% endblock %}
 
 {% block content %}
-<div class="auth-container">
+  <div class="auth-container">
     <h2>Profile: {{ user.username }}</h2>
 
-    <p><strong>Email:</strong> {{ user.email }}</p>
-    <p><strong>User Type:</strong> {{ profile.user_type|capfirst }}</p>
+    {% if profile.profile_image %}
+      <a href="{% url 'edit_profile' %}"><img src="{{ user.profile.profile_image }}" alt="Profile Image" style="width:200px; height:200px; border-radius:50%; object-fit: coverborder:2px solid #11182d; margin-bottom:15px;" /></a>
+    {% else %}
+      <img src="https://i.pravatar.cc/120?u={{ user.username }}" alt="Default Image" style="width:120px; height:120px; border-radius:50%; object-fit:cover; border:2px solid #11182d; margin-bottom:15px;" />
+    {% endif %}
 
-</div>
+    <p>
+      <strong>Email:</strong> {{ user.email }}
+    </p>
+    <p>
+      <strong>User Type:</strong> {{ profile.user_type|capfirst }}
+    </p>
+
+    {% if message %}
+      <p style="color:green; margin-top:10px;">{{ message }}</p>
+    {% endif %}
+  </div>
 {% endblock %}

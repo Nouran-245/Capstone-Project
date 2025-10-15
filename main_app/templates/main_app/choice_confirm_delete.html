@@ -5,10 +5,10 @@
 {% endblock %}
 {% block content %}
   <h2>Confirm Deletion</h2>
-  <p>Are you sure you want to delete "{{ object }}"?</p>
-  <form class="delete-form" method="post" action="{% url 'choice_confirm_delete' quiz.id question.id choice.id%}">
+  <p>Are you sure you want to delete "{{ choice.text }}"?</p>
+  <form class="delete-form" method="post" action="{% url 'choice_confirm_delete' quiz.id question.id choice.id %}">
     {% csrf_token %}
     <button type="submit">Yes, delete</button>
-    <a href="{% url 'question_list' quiz.id %}">Cancel</a>
+    <a href="{% url 'choice_list' quiz.id question.id %}">Cancel</a>
   </form>
 {% endblock %}

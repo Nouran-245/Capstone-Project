@@ -121,8 +121,8 @@ nav.scrolled ul li a:hover {
 
 nav ul {
     display: flex;
-    flex-direction: row;
     justify-content: center;
+    align-items: center;
     list-style: none;
     padding: 0;
     margin: 0;

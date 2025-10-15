@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block css %}
+  <link rel="stylesheet" href="{% static 'css/other.css' %}" />
+{% endblock %}
+
+{% block content %}
+  <div class="auth-container ">
+    <h2>Edit Profile</h2>
+    <form method="POST">
+      {% csrf_token %}
+      <label for="profile_image" class="ProfileURL">Profile Image URL:</label>
+      {{ form.profile_image }}
+      <button type="submit" class="btn">Save</button>
+    </form>
+  </div>
+{% endblock %}

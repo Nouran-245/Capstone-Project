@@ -9,8 +9,8 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from .models import Quiz, Question, Choice, StudentAnswer, Result, Profile
-from .forms import QuizForm, QuestionForm, ChoiceForm
+from .models import Quiz, Question, Choice, Result, Profile
+from .forms import QuizForm, QuestionForm, ChoiceForm , ProfileForm
 from django.urls import reverse_lazy, reverse
 from .forms import SignUpForm
 
@@ -48,6 +48,17 @@ def homepage(request):
         },
     )
 
+@login_required
+def edit_profile(request):
+    profile = request.user.profile
+    if request.method == "POST":
+        form = ProfileForm(request.POST, instance=profile)
+        if form.is_valid():
+            form.save()
+            return redirect('homepage')
+    else:
+        form = ProfileForm(instance=profile)
+    return render(request, 'edit_profile.html', {'form': form})
 
 @login_required
 def history_quiz(request, quiz_id):
