@@ -6,10 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="https://fonts.googleapis.com/css2?family=Markazi+Text:wght@400..700&family=Pacifico&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="{% static 'css/base.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/fontsize.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/responsive.css' %}" />
     {% block css %}
 
     {% endblock %}
-    <link rel="stylesheet" href="{% static 'css/fontsize.css' %}" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" /> <link rel="icon" type="image/png" href="{% static 'image/logoicon.png' %}" />
     <title>
       {% block title %}
@@ -27,25 +28,40 @@
     </header>
 
     {% if request.resolver_match.url_name != 'login' and request.resolver_match.url_name != 'signup' %}
+      <!-- Navbar -->
       <nav id="main-navbar" class="transparent-nav">
-        <ul>
+        <input type="checkbox" id="menu-toggle" />
+        <label for="menu-toggle" class="menu-icon">
+          <span></span>
+          <span></span>
+          <span></span>
+        </label>
+
+        <ul class="nav-links">
           {% if user.is_authenticated %}
-            <li>
+            <!-- Profile Image -->
+            <li class="profile-img">
               {% if profile.profile_image %}
-                <a href="{% url 'profile' user.username %}"><img src="{{ user.profile.profile_image }}" alt="Profile" style="width:35px; height:35px; border-radius:50%; object-fit: cover;" /></a>
+                <a href="{% url 'profile' user.username %}"><img src="{{ user.profile.profile_image }}" alt="Profile" /></a>
               {% else %}
-                <a href="{% url 'edit_profile' %}"><img src="https://tse4.mm.bing.net/th/id/OIP.QD_JW-y3pl5s8LY4lwkn9QAAAA?cb=12&rs=1&pid=ImgDetMain&o=7&rm=3" alt="Default Image" style="width:35px; height:35px; border-radius:50%; object-fit: cover;" /></a>
+                <a href="{% url 'edit_profile' %}"><img src="https://tse4.mm.bing.net/th/id/OIP.QD_JW-y3pl5s8LY4lwkn9QAAAA?cb=12&rs=1&pid=ImgDetMain&o=7&rm=3" alt="Default Image" /></a>
               {% endif %}
             </li>
+
+            <!-- Username -->
             <li>
               <a href="{% url 'profile' user.username %}">{{ user.username }}</a>
             </li>
+
+            <!-- Main Links -->
             <li>
               <a href="{% url 'main' %}">Main</a>
             </li>
             <li>
               <a href="{% url 'homepage' %}">MyHome</a>
             </li>
+
+            <!-- Add Quizzes for teachers/admin only -->
             {% with profile=user.profile %}
               {% if profile.user_type != 'student' %}
                 <li>
@@ -53,10 +69,14 @@
                 </li>
               {% endif %}
             {% endwith %}
-            <form method="post" action="{% url 'logout' %}">
-              {% csrf_token %}
-              <button type="submit">Logout</button>
-            </form>
+
+            <!-- Logout -->
+            <li>
+              <form method="post" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <button type="submit">Logout</button>
+              </form>
+            </li>
           {% else %}
             {% if url != 'signup' and url != 'login' and url != 'main' %}
               <li>

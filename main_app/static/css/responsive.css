@@ -1,0 +1,209 @@
+/* responsive.css */
+@media (max-width: 768px) {
+    h1{
+        font-size:50px
+    }
+    h2{
+        font-size: 20px;
+    }
+    p{
+        font-size: 14px;
+    }
+    main h2{
+       font-size: 30px;
+    }
+
+    /* Hero section */
+    .hero-section {
+        justify-content: center;
+        font-size: 16px;
+        min-height: 70vh;
+        flex-direction: column;
+        text-align: center;
+        padding: 10px 15px;
+    }
+
+    .hero_image img {
+        display: none;
+    }
+
+    .hero-content a {
+        padding: 8px 15px;
+        font-size: 16px;
+    }
+
+
+    /* Main sections */
+    main section,
+    .contact-section {
+        padding: 30px ;
+        margin: 10px;
+        min-width: unset;
+        border-radius: 5px;
+        text-align: center;
+    }
+
+    /* Auth container */
+    .auth-container {
+        width: 95%;
+        padding: 10px;
+        font-size: 12px;
+    }
+
+    .auth-container h2 {
+        font-size: 1.5em;
+    }
+
+    .auth-container label,
+    .auth-container p {
+        font-size: 12px;
+    }
+
+    .auth-container input,
+    .auth-container textarea {
+        font-size: 12px;
+        padding: 6px;
+    }
+
+    .auth-container button {
+        font-size: 14px;
+        padding: 6px 20px;
+    }
+
+    /* Quizzes container */
+    .auth-container.quizzes-container {
+        width: 95%;
+        padding: 10px;
+        margin: 10px auto;
+    }
+
+    .auth-container.quizzes-container h1 {
+        font-size: 1.5rem;
+    }
+
+    .auth-container.quizzes-container h3 {
+        font-size: 1.2rem;
+    }
+
+    /* Tables */
+    .table {
+        font-size: 10px;
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+
+    .table th,
+    .table td {
+        padding: 4px 6px;
+        font-size: 10px;
+    }
+
+    .tdbtn a.btn {
+        font-size: 10px;
+        padding: 2px 5px;
+    }
+
+    /* Quiz list */
+    .quiz-list {
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .quiz-item {
+        width: 100%;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 5px;
+        font-size: 10px;
+    }
+
+    .quiz-cruds a {
+        font-size: 10px;
+    }
+
+    /* Footer */
+    footer,
+    .footer-content,
+    .footer-bottom p {
+        font-size: 10px;
+        padding: 10px;
+    }
+}
+
+/* Tablets: medium devices */
+@media (min-width: 769px) and (max-width: 1024px) {
+
+    .hero-section {
+        flex-direction: column;
+        padding: 20px;
+        font-size: 18px;
+    }
+
+    .hero_image img {
+        width: 80%;
+        max-width: 300px;
+    }
+
+    main section,
+    .contact-section,
+    .auth-container,
+    .auth-container.quizzes-container {
+        padding: 20px 15px;
+        margin: 20px 10px;
+    }
+
+    .table th,
+    .table td {
+        padding: 6px 8px;
+        font-size: 14px;
+    }
+
+    .tdbtn a.btn {
+        font-size: 12px;
+        padding: 4px 10px;
+    }
+
+    .auth-container h2 {
+        font-size: 1.8em;
+    }
+
+    .auth-container.quizzes-container h1 {
+        font-size: 1.8rem;
+    }
+
+    .auth-container.quizzes-container h3 {
+        font-size: 1.5rem;
+    }
+}
+
+
+
+
+@media (max-width: 768px) {
+  #main-navbar ul {
+    position: absolute;
+    top: 60px;
+    right: 0;
+    width: 100%;
+    background: rgba(251, 177, 4, 0.95);
+    flex-direction: column;
+    padding: 60px 20px;
+    gap: 15px;
+    display: none;
+  }
+
+  #menu-toggle:checked ~ ul {
+    display: flex;
+    animation: slideIn 0.4s ease forwards;
+  }
+
+  @keyframes slideIn {
+    from { transform: translateX(100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+  }
+
+  .menu-icon {
+    display: flex;
+  }
+}
