@@ -12,7 +12,7 @@
     {% if profile.profile_image %}
       <a href="{% url 'edit_profile' %}"><img src="{{ user.profile.profile_image }}" alt="Profile Image" style="width:200px; height:200px; border-radius:50%; object-fit: coverborder:2px solid #11182d; margin-bottom:15px;" /></a>
     {% else %}
-      <img src="https://i.pravatar.cc/120?u={{ user.username }}" alt="Default Image" style="width:120px; height:120px; border-radius:50%; object-fit:cover; border:2px solid #11182d; margin-bottom:15px;" />
+      <a href="{% url 'edit_profile' %}"><img src="https://tse4.mm.bing.net/th/id/OIP.QD_JW-y3pl5s8LY4lwkn9QAAAA?cb=12&rs=1&pid=ImgDetMain&o=7&rm=3" alt="Default Image" style="width:120px; height:120px; border-radius:50%; object-fit:cover; border:2px solid #11182d; margin-bottom:15px;" />
     {% endif %}
 
     <p>

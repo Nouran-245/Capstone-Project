@@ -31,7 +31,11 @@
         <ul>
           {% if user.is_authenticated %}
             <li>
-              <a href="{% url 'profile' user.username  %}"><img src="{{ user.profile.profile_image }}" alt="Profile" style="width:35px; height:35px; border-radius:50%; object-fit: cover;" /></a>
+              {% if profile.profile_image %}
+                <a href="{% url 'profile' user.username %}"><img src="{{ user.profile.profile_image }}" alt="Profile" style="width:35px; height:35px; border-radius:50%; object-fit: cover;" /></a>
+              {% else %}
+                <a href="{% url 'edit_profile' %}"><img src="https://tse4.mm.bing.net/th/id/OIP.QD_JW-y3pl5s8LY4lwkn9QAAAA?cb=12&rs=1&pid=ImgDetMain&o=7&rm=3" alt="Default Image" style="width:35px; height:35px; border-radius:50%; object-fit: cover;" /></a>
+              {% endif %}
             </li>
             <li>
               <a href="{% url 'profile' user.username %}">{{ user.username }}</a>
@@ -42,11 +46,13 @@
             <li>
               <a href="{% url 'homepage' %}">MyHome</a>
             </li>
-            {% if profile.user_type != 'student' %}
-              <li>
-                <a href="{% url 'quiz_list' %}">Add Quizzes</a>
-              </li>
-            {% endif %}
+            {% with profile=user.profile %}
+              {% if profile.user_type != 'student' %}
+                <li>
+                  <a href="{% url 'quiz_list' %}">Add Quizzes</a>
+                </li>
+              {% endif %}
+            {% endwith %}
             <form method="post" action="{% url 'logout' %}">
               {% csrf_token %}
               <button type="submit">Logout</button>

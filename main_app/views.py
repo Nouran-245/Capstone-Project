@@ -17,7 +17,10 @@ from .forms import SignUpForm
 
 # normal views
 def main(request):
-    return render(request, "main.html")
+    profile = None
+    if request.user.is_authenticated:
+        profile = request.user.profile
+    return render(request, "main.html", {"profile": profile})
 
 
 @login_required
