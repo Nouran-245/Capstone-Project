@@ -2,9 +2,9 @@
 # 🧠 QuizVerse – Online Quiz Creator & Taker Platform
 
 ## 💡 Concept
-**QuizVerse** is a web platform where any user can create quizzes and other users can take them.  
+**QuizVerse** is a web platform where any users as teachers can create quizzes and other users as students can take them.  
 After completing a quiz, the system automatically grades it and shows the result.  
-Quiz creators can view who took their quizzes and their scores, while users can view their own quiz history and results.
+Quiz creators can view who took their quizzes and their scores, while users can view their own quizzes results.
 
 ---
 
@@ -14,7 +14,6 @@ Quiz creators can view who took their quizzes and their scores, while users can 
 - As a user, I can view all available quizzes created by others.  
 - As a user, I can take a quiz and see my score at the end.  
 - As a quiz creator, I can see all participants and their scores for my quizzes.  
-- As a user, I can view my quiz history (quizzes I took and scores).  
 - As an admin, I can manage users and quizzes.
 
 ---
@@ -36,12 +35,13 @@ Frontend: HTML, CSS
 Database: SQLite (default Django)
 
 Version Control: Git + GitHub
+
 ## 🧩 ERD (Entity Relationship Diagram)
 
 **User (built-in Django)**  
 │  
 ├── **Quiz**  
-│   ├── user (FK to User) — *creator*  
+│   ├── user (FK to User) — *creator* 
 │   ├── title (CharField)  
 │   ├── description (TextField)  
 │   ├── created_at (DateTimeField)  
@@ -73,7 +73,7 @@ Version Control: Git + GitHub
 - Below is the DBML schema used for the project ERD:
 
 ```dbml
-Table User {
+Table Profile {
   id int [pk]
   username varchar
   email varchar
@@ -125,12 +125,12 @@ Table Result {
 ### 2. Quiz Creation
 - Form to create a quiz (title, description).  
 - Add multiple questions and choices to a quiz.  
-- Mark correct answer(s) for each question.  
+- Mark correct answer for each question.  
 - Quiz creators can edit or delete their own quizzes.  
 
 ### 3. Taking a Quiz
 - Users choose a quiz from the list.  
-- Questions displayed one by one (or all at once).  
+- Questions displayed all at once.  
 - User submits answers → score calculated automatically.  
 - Result stored in the **Result** model.  
 
@@ -143,37 +143,76 @@ Table Result {
 ### 5. Results for Quiz Creators
 - “My Quizzes” page shows all quizzes the user created.  
 - Each quiz displays:
-  - Number of participants  
   - List of users who took it  
   - Each user’s score  
+  - Date taken  
+
 
 ---
 
 ## 🧱 Example Pages
-------------------------------------------------------------------------
-| Page                   | Description                                 |
-------------------------------------------------------------------------
-| **Home (All Quizzes)** | Lists all available quizzes                 |
-| **Quiz Detail**        | Shows description + “Start Quiz” button     |
-| **Take Quiz**          | Displays questions and choices              |
-| **Quiz Result**        | Shows score and correct answers             |
-| **My Quizzes**         | Lists quizzes created by the logged-in user |
-| **My Results**         | Shows all quizzes the user has taken        |
-| **Add/Edit Quiz**      | Form to create or update a quiz             |
-| **Login / Register**   | Authentication pages                        |
-------------------------------------------------------------------------
+
+| Page| Description|
+| **Home (All Quizzes)**| Lists all available quizzes and all taken quizzes (depends on user type)         
+| **Quiz Detail**       | Shows description + “Start Quiz” button     
+| **Take Quiz**         | Displays questions and choices              
+| **Quiz Result**       | Shows score            
+| **My Quizzes**        | Lists quizzes created by the logged-in user 
+| **My Results**        | Shows all quizzes the user has taken        
+| **Add/Edit Quiz**     | Form to create or update a quiz             
+| **Login / Register**  | Authentication pages                        
+
 
 ---
 
 ## ✨ Stretch Features
 - Support multiple correct answers per question  
 - Add a timer for quizzes  
-- Add quiz categories (e.g., Tech, General Knowledge)  
 - Leaderboard for top scorers per quiz  
-- Allow users to retake quizzes  
+- Limit users to retake quizzes  
 - Export results as CSV for quiz creators  
 - Progress bar during quiz taking  
 
+---
+## 🚀 Running the Project / Local Setup
+
+Follow these steps to set up and run the project locally:
+
+1. **Fork** this repository to your GitHub account.  
+2. **Clone** your forked repository to your local machine:
+   ```bash
+   git clone git@github.com:YOUR_USERNAME/capstone.git
+Navigate to the project directory:
+
+
+cd capstone
+Create and activate a virtual environment (recommended):
+
+
+python -m venv venv
+source venv/Scripts/activate   # On Windows
+source venv/bin/activate       # On macOS/Linux
+Install project dependencies:
+
+
+pip install -r requirements.txt
+Apply migrations to set up the database:
+
+python manage.py migrate
+
+Run the development server:
+
+python manage.py runserver
+Open your browser and go to:
+
+http://127.0.0.1:8000/
+
+🎉 Now the project should be running locally!
+
+yaml
+Copy code
+
+---
 ---
 
 ### 👨‍💻 Author
