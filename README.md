@@ -152,15 +152,17 @@ Table Result {
 
 ## 🧱 Example Pages
 
-| **Page**| **Description**
-| **Home (All Quizzes)**| Lists all available quizzes and all taken quizzes (depends on user type)         
-| **Quiz Detail**       | Shows description + “Start Quiz” button     
-| **Take Quiz**         | Displays questions and choices              
-| **Quiz Result**       | Shows score            
-| **My Quizzes**        | Lists quizzes created by the logged-in user 
-| **My Results**        | Shows all quizzes the user has taken        
-| **Add/Edit Quiz**     | Form to create or update a quiz             
-| **Login / Register**  | Authentication pages                        
+| **Page**          | **Description**                                                      |
+|-------------------|----------------------------------------------------------------------|
+| Home (All Quizzes)| Lists all available quizzes and all taken quizzes (depends on user type) |
+| Quiz Detail       | Shows description + “Start Quiz” button                               |
+| Take Quiz         | Displays questions and choices                                        |
+| Quiz Result       | Shows score                                                           |
+| My Quizzes        | Lists quizzes created by the logged-in user                           |
+| My Results        | Shows all quizzes the user has taken                                  |
+| Add/Edit Quiz     | Form to create or update a quiz                                       |
+| Login / Register  | Authentication pages                                                  |
+                    
 
 
 ---
@@ -227,9 +229,9 @@ Follow these steps to set up and run the project locally:
 ---
 
 
-# 🧠 Key Learnings
+## 🧠 Key Learnings
 
-# Through building QuizVerse, I learned how to:
+### Through building QuizVerse, I learned how to:
 
 - Develop a full-stack web application using Django and Python.
 
