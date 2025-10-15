@@ -152,7 +152,7 @@ Table Result {
 
 ## 🧱 Example Pages
 
-| Page| Description|
+| Page| Description
 | **Home (All Quizzes)**| Lists all available quizzes and all taken quizzes (depends on user type)         
 | **Quiz Detail**       | Shows description + “Start Quiz” button     
 | **Take Quiz**         | Displays questions and choices              
