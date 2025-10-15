@@ -152,7 +152,7 @@ Table Result {
 
 ## 🧱 Example Pages
 
-| Page| Description
+| **Page**| **Description**
 | **Home (All Quizzes)**| Lists all available quizzes and all taken quizzes (depends on user type)         
 | **Quiz Detail**       | Shows description + “Start Quiz” button     
 | **Take Quiz**         | Displays questions and choices              
@@ -223,6 +223,25 @@ Follow these steps to set up and run the project locally:
 
 
 🎉 Now the project should be running locally!
+
+---
+
+
+# 🧠 Key Learnings
+
+# Through building QuizVerse, I learned how to:
+
+- Develop a full-stack web application using Django and Python.
+
+- Design and manage models, views, and templates (MVT architecture).
+
+- Handle user authentication and role-based access (teacher vs. student).
+
+- Implement CRUD operations for quizzes, questions, and choices.
+
+- Build responsive and clean UI using HTML and CSS.
+
+- Connect the frontend and backend smoothly to deliver a dynamic user experience.
 
 ---
 
