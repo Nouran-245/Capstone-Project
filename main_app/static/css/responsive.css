@@ -1,17 +1,5 @@
 /* responsive.css */
 @media (max-width: 768px) {
-    h1{
-        font-size:50px
-    }
-    h2{
-        font-size: 20px;
-    }
-    p{
-        font-size: 14px;
-    }
-    main h2{
-       font-size: 30px;
-    }
 
     /* Hero section */
     .hero-section {
@@ -33,14 +21,106 @@
     }
 
 
+    h1 {
+        font-size: 50px
+    }
+
+    h2 {
+        font-size: 20px;
+    }
+
+    p {
+        font-size: 14px;
+    }
+
+    main {
+        padding: 5px !important;
+    }
+
+    main li {
+        font-size: 14px;
+    }
+
+    main h2 {
+        font-size: 30px;
+    }
+
+    /* contact form */
+
+    .form-group {
+        gap: 10px;
+    }
+
+    .form-group input,
+    .form-group textarea {
+        padding: 7px;
+        font-size: 12px;
+    }
+
+    .form-group input {
+        min-height: 40px;
+    }
+
+    textarea {
+        min-height: 70px;
+    }
+
+    .btn {
+        padding: 8px 20px;
+        border-radius: 8px;
+        font-size: 14px;
+    }
+
+    /* social media */
+    .social-media {
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .social-media a {
+        font-size: 14px;
+        margin: 5px;
+    }
+
+    .social-media h3 {
+        text-align: center;
+        margin: 0 !important;
+    }
+
+    .social-media a:hover {
+        transform: scale(1);
+    }
+
+
+
+
+    /* Navbar */
+    nav {
+        padding: 25px 0;
+    }
+
+    .scrolled {
+        background-color: rgba(3, 6, 23, 0.97);
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        position: fixed;
+        top: 0;
+    }
+
+    /* body */
+    
+
     /* Main sections */
     main section,
     .contact-section {
-        padding: 30px ;
+        padding: 30px;
         margin: 10px;
         min-width: unset;
         border-radius: 5px;
         text-align: center;
+        justify-content: center;
+        align-items: center;
+
     }
 
     /* Auth container */
@@ -65,16 +145,11 @@
         padding: 6px;
     }
 
-    .auth-container button {
-        font-size: 14px;
-        padding: 6px 20px;
-    }
-
     /* Quizzes container */
     .auth-container.quizzes-container {
         width: 95%;
         padding: 10px;
-        margin: 10px auto;
+        margin: 5px auto;
     }
 
     .auth-container.quizzes-container h1 {
@@ -129,10 +204,67 @@
         font-size: 10px;
         padding: 10px;
     }
+
+    /* .auth-container */
+    .auth-container {
+        border-radius: 20px;
+        padding: 10px;
+        min-width: 230px !important;
+    }
+
+    .auth-container h2 {
+        font-size: 2em;
+        margin-bottom: 10px;
+    }
+
+    .auth-container form p {
+        margin-bottom: 8px;
+    }
+
+    .auth-container label {
+        font-size: 1.1em;
+        margin-bottom: 5px;
+    }
+
+
+    .auth-container input {
+        width: 100%;
+        padding: 10px;
+        border-radius: 8px;
+    }
+
+    .auth-container button {
+        padding: 9px 15px !important;
+        font-size: 16px !important;
+    }
+
+    .auth-container button:hover {
+        transform: scale(1);
+    }
+
+    .auth-container p {
+        margin-top: 8px;
+        font-size: 1em;
+    }
+
+    main .auth-container p a {
+        font-size: 16px !important;
+    }
+
+
+
+
+
+
+
+
 }
 
 /* Tablets: medium devices */
-@media (min-width: 769px) and (max-width: 1024px) {
+@media (min-width: 768px) and (max-width: 1024px) {
+    .hero_image img {
+        display: none;
+    }
 
     .hero-section {
         flex-direction: column;
@@ -149,8 +281,24 @@
     .contact-section,
     .auth-container,
     .auth-container.quizzes-container {
-        padding: 20px 15px;
+        padding: 140px 15px;
         margin: 20px 10px;
+    }
+
+    main h2 {
+        font-size: 45px;
+    }
+
+    main li {
+        gap: 10px;
+        text-align: left;
+        line-height: 3;
+    }
+
+    main section,
+    .contact-section {
+        justify-content: center;
+        align-items: center;
     }
 
     .table th,
@@ -175,35 +323,5 @@
     .auth-container.quizzes-container h3 {
         font-size: 1.5rem;
     }
-}
 
-
-
-
-@media (max-width: 768px) {
-  #main-navbar ul {
-    position: absolute;
-    top: 60px;
-    right: 0;
-    width: 100%;
-    background: rgba(251, 177, 4, 0.95);
-    flex-direction: column;
-    padding: 60px 20px;
-    gap: 15px;
-    display: none;
-  }
-
-  #menu-toggle:checked ~ ul {
-    display: flex;
-    animation: slideIn 0.4s ease forwards;
-  }
-
-  @keyframes slideIn {
-    from { transform: translateX(100%); opacity: 0; }
-    to { transform: translateX(0); opacity: 1; }
-  }
-
-  .menu-icon {
-    display: flex;
-  }
 }

@@ -309,7 +309,7 @@ textarea {
 
 .btn {
     align-self: center;
-    background: #fbaf04;
+    background: rgb(251, 175, 4);
     color: #030617;
     border: none;
     padding: 12px 35px;
@@ -340,83 +340,118 @@ button {
     justify-self: center;
 }
 
-
-
-/* Navbar */
-#main-navbar {
-  position: absolute;
-  width: 100%;
-  top: 0;
-  padding: 15px 20px;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  z-index: 10;
-  background: transparent;
-  transition: background-color 0.4s ease, box-shadow 0.4s ease;
+.pr_img {
+    width: 40px;
+    height: auto;
+    border-radius: 50%;
 }
 
-#main-navbar ul {
-  display: flex;
-  gap: 15px;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  align-items: center;
-}
 
-#main-navbar ul li a {
-  color: #fff;
-  text-decoration: none;
-}
-
-#main-navbar ul li a:hover {
-  color: rgb(251, 177, 4);
-}
-
-.profile-img img {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  object-fit: cover;
-}
-
-/* Hamburger */
+/* ================= HAMBURGER MENU ================= */
 .menu-icon {
-  display: none;
-  flex-direction: column;
-  justify-content: space-between;
-  width: 30px;
-  height: 25px;
-  cursor: pointer;
-  position: relative;
-  z-index: 20;
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+    gap: 6px;
 }
 
 .menu-icon span {
-  display: block;
-  height: 4px;
-  width: 100%;
-  background: #fff;
-  border-radius: 2px;
-  transition: all 0.5s ease;
-  transform-origin: center;
+    width: 25px;
+    height: 3px;
+    background-color: #fff;
+    border-radius: 3px;
+    transition: 0.3s;
 }
 
-/* Animation when checked */
-#menu-toggle:checked + .menu-icon span:nth-child(1) {
-  transform: rotate(45deg) translate(5px, 5px);
-}
-
-#menu-toggle:checked + .menu-icon span:nth-child(2) {
-  opacity: 0;
-}
-
-#menu-toggle:checked + .menu-icon span:nth-child(3) {
-  transform: rotate(-45deg) translate(5px, -5px);
-}
-
-/* Responsive */
+/* Hide checkbox */
 #menu-toggle {
-  display: none;
+    display: none;
+}
+
+#menu-toggle:checked+.menu-icon+nav {
+    display: block;
+    width: 100%;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+
+/* Animate hamburger icon into X */
+#menu-toggle:checked+.menu-icon span:nth-child(1) {
+    transform: rotate(45deg) translateY(8px);
+}
+
+#menu-toggle:checked+.menu-icon span:nth-child(2) {
+    opacity: 0;
+}
+
+#menu-toggle:checked+.menu-icon span:nth-child(3) {
+    transform: rotate(-45deg) translateY(-8px);
+}
+
+@media (max-width: 768px) {
+
+    /* تثبيت الهمبرغر بالأعلى */
+    .menu-icon {
+        display: flex;
+        position: fixed;
+        top: 15px;
+        right: 20px;
+        z-index: 1001;
+    }
+
+    /* تأكد أن النافبار ما يغطي المحتوى */
+    nav {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        background: rgba(3, 6, 23, 0.95);
+        border-bottom: 2px solid #fbaf04;
+        z-index: 1000;
+        transition: background-color 0.3s ease;
+    }
+
+    /* القائمة المنسدلة */
+    nav ul {
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+        background-color: rgba(3, 6, 23, 0.97);
+        width: 100%;
+        text-align: center;
+        padding: 20px 0;
+        border-bottom-left-radius: 15px;
+        border-bottom-right-radius: 15px;
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+        animation: slideDown 0.3s ease-in-out;
+    }
+
+    /* عند فتح المنيو */
+    #menu-toggle:checked+.menu-icon+nav ul {
+        display: flex;
+    }
+
+    /* حركة انزلاق لطيفة */
+    @keyframes slideDown {
+        from {
+            transform: translateY(-15px);
+            opacity: 0;
+        }
+
+        to {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    }
+
+    /* روابط المنيو */
+    nav ul li a {
+        color: #fbaf04;
+        font-size: 20px;
+        transition: color 0.3s;
+    }
+
+    nav ul li a:hover {
+        color: #fff;
+    }
 }
