@@ -25,6 +25,7 @@ urlpatterns = [
     path('homepage/', views.homepage, name='homepage'),
     path('quizzes/', QuizListView.as_view(), name='quiz_list'),
     path('attempt/<int:quiz_id>/', views.attempt_quiz, name='attempt_quiz'),
+    path('quizzes/<int:quiz_id>/history', views.history_quiz, name='history_quiz'),
     path('profile/<str:username>/', views.profile_view, name='profile'),
     path('submit/<int:quiz_id>/', views.take_quiz, name='take_quiz'),
 

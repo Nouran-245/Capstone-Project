@@ -49,7 +49,16 @@ def homepage(request):
     )
 
 
+@login_required
+def history_quiz(request, quiz_id):
+    quiz = get_object_or_404(Quiz, id=quiz_id)
+    results = Result.objects.filter(quiz=quiz)
+    return render(request, "quiz_history.html", {
+        "quiz": quiz,
+        "results": results,
+    })
 
+@login_required
 def attempt_quiz(request, quiz_id):
     profile = Profile.objects.get(user=request.user)
     quiz = get_object_or_404(Quiz, id=quiz_id)

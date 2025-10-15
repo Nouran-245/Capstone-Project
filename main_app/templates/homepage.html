@@ -20,6 +20,7 @@
               <th>Quiz Title</th>
               <th>Description</th>
               <th>Created At</th>
+              <th>َQuiz History</th>
             </tr>
           </thead>
           <tbody>
@@ -31,6 +32,9 @@
                 </td>
                 <td>{{ quiz.description }}</td>
                 <td>{{ quiz.created_at|date:'Y-m-d H:i' }}</td>
+                <td class="tdbtn">
+                  <a href="{% url 'history_quiz' quiz.id %}" class="btn">View History</a>
+                </td>
               </tr>
             {% endfor %}
           </tbody>
