@@ -38,33 +38,33 @@ Version Control: Git + GitHub
 
 ## 🧩 ERD (Entity Relationship Diagram)
 
-**User (built-in Django)**  
+User (built-in Django)
 │
-├── **Profile** 
+├── Profile
 │   ├── user (OneToOneField to User)
 │   ├── user_type (CharField: 'student' or 'teacher')
 │   ├── profile_image (URLField, optional)
-│  
-├── **Quiz**  
-│   ├── user (FK to User) — *creator* 
-│   ├── title (CharField)  
-│   ├── description (TextField)  
-│   ├── created_at (DateTimeField)  
-│  
-├── **Question**  
-│   ├── quiz (FK to Quiz)  
-│   ├── text (CharField)  
-│  
-├── **Choice**  
-│   ├── question (FK to Question)  
-│   ├── text (CharField)  
-│   ├── is_correct (BooleanField)  
-│  
-└── **Result**  
-    ├── user (FK to User) — *quiz taker*  
-    ├── quiz (FK to Quiz)  
-    ├── score (IntegerField)  
-    ├── taken_at (DateTimeField)  
+│
+├── Quiz
+│   ├── user (FK to User) — creator (teacher)
+│   ├── title (CharField)
+│   ├── description (TextField, optional)
+│   ├── created_at (DateTimeField)
+│
+├── Question
+│   ├── quiz (FK to Quiz)
+│   ├── text (CharField)
+│
+├── Choice
+│   ├── question (FK to Question)
+│   ├── text (CharField)
+│   ├── is_correct (BooleanField)
+│
+└── Result
+    ├── user (FK to User) — quiz taker
+    ├── quiz (FK to Quiz)
+    ├── score (IntegerField)
+    ├── taken_at (DateTimeField)
 
 **Relationships:**  
 - Each quiz belongs to a creator (**User**).  
