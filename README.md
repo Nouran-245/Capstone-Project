@@ -37,7 +37,7 @@ Database: SQLite (default Django)
 Version Control: Git + GitHub
 
 ## 🧩 ERD (Entity Relationship Diagram)
-
+```
 User (built-in Django)
 │
 ├── Profile
@@ -65,7 +65,7 @@ User (built-in Django)
     ├── quiz (FK to Quiz)
     ├── score (IntegerField)
     ├── taken_at (DateTimeField)
-
+```
 **Relationships:**  
 - Each quiz belongs to a creator (**User**).  
 - Each quiz has multiple **Questions**.  
