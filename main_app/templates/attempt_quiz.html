@@ -4,14 +4,14 @@
   <link rel="stylesheet" href="{% static 'css/other.css' %}" />
 {% endblock %}
 {% block content %}
-  <div class="auth-container quizzes-container">
+  <div class="auth-container quizzes-container take">
     <h1>{{ quiz.title }}</h1>
     <p>{{ quiz.description }}</p>
     <p>
       <strong>Created At:</strong> {{ quiz.created_at|date:'Y-m-d H:i' }}
     </p>
-{% comment %} action="{% url 'score' choice.is_correct question.id as i think%}" {% endcomment %}
-    <form method="POST" action="{% url 'take_quiz' quiz.id%}">
+    {% comment %}action="{% url 'score' choice.is_correct question.id as i think %}"{% endcomment %}
+    <form method="POST" action="{% url 'take_quiz' quiz.id %}">
       {% csrf_token %}
       {% for question in questions %}
         <div class="question-block" style="margin-bottom: 30px;">
@@ -20,9 +20,9 @@
             {% for choice in choices %}
               {% if choice.question.id == question.id %}
                 <li style="margin-bottom: 10px;">
-                  <label>
-                    <input type="radio" name="question_{{ question.id }}" value="{{ choice.id }}" />
-                    {{ choice.text }}
+                  <label style="display: flex; align-items: center; flex-direction: row;">
+                    <input type="radio" name="question_{{ question.id }}" value="{{ choice.id }}" class="question-input"/>
+                    <span style="margin-left: 8px;">{{ choice.text }}</span>
                   </label>
                 </li>
               {% endif %}

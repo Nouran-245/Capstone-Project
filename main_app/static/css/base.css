@@ -455,3 +455,19 @@ button {
         color: #fff;
     }
 }
+
+
+.auth-container .question-input{
+    width: auto !important;
+}
+.question-block ul{
+    text-align: center;
+}
+.auth-container.quizzes-container.take{
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
+    font-size: larger;
+
+}

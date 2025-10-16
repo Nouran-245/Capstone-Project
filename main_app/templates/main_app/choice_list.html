@@ -50,6 +50,6 @@
       {% endif %}
     </div>
 
-    <a href="{% url 'quiz_list' %}" class="back-link">Back to Questions</a>
+    <a href="{% url 'question_list' quiz.id%}" class="back-link">Back to Questions</a>
   </div>
 {% endblock %}
