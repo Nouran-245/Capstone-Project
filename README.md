@@ -73,12 +73,19 @@ Version Control: Git + GitHub
 - Below is the DBML schema used for the project ERD:
 
 ```dbml
-Table Profile {
+Table User {
   id int [pk]
   username varchar
   email varchar
   password varchar
-  is_staff boolean
+  is_staff boolean 
+}
+
+Table Profile {
+  id int [pk]
+  user_id int [ref: > User.id]
+  user_type varchar
+  profile_image varchar
 }
 
 Table Quiz {
@@ -187,7 +194,7 @@ Follow these steps to set up and run the project locally:
   ```
 3. Navigate to the project directory:
   ```bash
-    cd capstone
+    cd Capstone_Project
   ```
 
 4. Initialize a new virtual environment and install Django:
@@ -201,24 +208,30 @@ Follow these steps to set up and run the project locally:
   ```
 6. Start a new Django project inside your current directory:
   ```bash
-    django-admin startproject capstone .
+    django-admin startproject <project_name> .
+  ```
+7. Connected to the Database and create one
+  ```bash
+    pip install psycopg2-binary
+    ctreatedb <database_name>
   ```
 
-6. Apply migrations to set up the database:
+8. Apply migrations to set up the database:
   ```bash
+    python manage.py makemigrations
     python manage.py migrate
   ```
 
-7. Run the development server:
+9. Run the development server:
   ```bash
     python manage.py runserver
   ```
 
-8. Open your browser and go to:
+10. Open your browser and go to:
   ```bash
     http://127.0.0.1:8000/
   ```
- 9. ✅ To deactivate the virtual environment when you're done working:
+11. ✅ To deactivate the virtual environment when you're done working:
   ```bash
     exit
   ```
