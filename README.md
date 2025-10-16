@@ -39,18 +39,18 @@ Version Control: Git + GitHub
 ## 🧩 ERD (Entity Relationship Diagram)
 
 **User (built-in Django)**  
-│  
+│
 ├── **Profile**
 │   ├── user (OneToOneField to User)
 │   ├── user_type (CharField: 'student' or 'teacher')
 │   ├── profile_image (URLField, optional)
-│
-├── **Quiz**
-│   ├── user (ForeignKey to User) — creator (teacher)
-│   ├── title (CharField)
-│   ├── description (TextField, optional)
-│   ├── created_at (DateTimeField)
-│
+│  
+├── **Quiz**  
+│   ├── user (FK to User) — *creator* 
+│   ├── title (CharField)  
+│   ├── description (TextField)  
+│   ├── created_at (DateTimeField)  
+│  
 ├── **Question**  
 │   ├── quiz (FK to Quiz)  
 │   ├── text (CharField)  
