@@ -40,7 +40,7 @@ Version Control: Git + GitHub
 
 **User (built-in Django)**  
 │
-├── **Profile**
+├── **Profile** 
 │   ├── user (OneToOneField to User)
 │   ├── user_type (CharField: 'student' or 'teacher')
 │   ├── profile_image (URLField, optional)
